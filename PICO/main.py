@@ -54,13 +54,13 @@ def GetDateTime():
 def CheckMinMax(temp, humid):
     OutOfBounds = False
     if(humid > MAX_HUMID):
-        OutOfBounds = true
+        OutOfBounds = True
     if(humid < MIN_HUMID):
-        OutOfBounds = true
+        OutOfBounds = True
     if(temp > MAX_TEMP):
-        OutOfBounds = true
+        OutOfBounds = True
     if(temp < MIN_TEMP):
-        OutOfBounds = true
+        OutOfBounds = True
     return(OutOfBounds)
 
 
@@ -86,7 +86,8 @@ while True:
 
     while WIFI: #If WIFI disconnects, it'll break out of this loop and reconnect automatically
         #Check if temp or humidity are out of safe bounds or if its time for the regular hourly post
-        if(CheckMinMax(bme280.temperature, bme280.relative_humidity) or time.localtime().tm_min <= 10 or JustBooted):
+        if(CheckMinMax(bme280.temperature, bme280.relative_humidity) or time.localtime().tm_min < 10 or JustBooted):
+            JustBooted = False
             try:
                 print("Posting data to database")
                 
@@ -103,7 +104,8 @@ while True:
                         "Humidity": bme280.relative_humidity,
                         "Pressure": bme280.pressure,
                         "Altitude": bme280.altitude,
-                        "DateTime": GetDateTime()
+                        "DateTime": GetDateTime(),
+                        "Important": CheckMinMax(bme280.temperature, bme280.relative_humidity)
                     }
                 })
                 
