@@ -18,6 +18,7 @@ led.direction = digitalio.Direction.OUTPUT
 spi = busio.SPI(board.GP10, board.GP11, board.GP12)
 cs = digitalio.DigitalInOut(board.GP13)
 bme280 = adafruit_bme280.Adafruit_BME280_SPI(spi, cs)
+bme280.sea_level_pressure = 1009.4
 
 #If the device has just been plugged in, send an extra post to the database
 JustBooted = True
@@ -36,6 +37,18 @@ MAX_TEMP = 30.0
 MIN_TEMP = 10.0
 MAX_HUMID = 50.0
 MIN_HUMID = 0.0
+
+#Get the current Date in the format YYYY MM DD
+def GetDate():
+    return(str(time.localtime().tm_year)+" "+str(time.localtime().tm_mon)+" "+str(time.localtime().tm_mday))
+
+#Get the current Time in the format hh mm ss
+def GetTime():
+    return(str(time.localtime().tm_hour)+" "+str(time.localtime().tm_min)+" "+str(time.localtime().tm_sec))
+
+#Get the current Date and Time in the format YYYY MM DD hh mm ss
+def GetDateTime():
+    return(GetDate()+" "+GetTime())
 
 # Function to check if any data is out of bounds
 def CheckMinMax(temp, humid):
@@ -89,7 +102,8 @@ while True:
                         "Temperature": bme280.temperature,
                         "Humidity": bme280.relative_humidity,
                         "Pressure": bme280.pressure,
-                        "Altitude": bme280.altitude
+                        "Altitude": bme280.altitude,
+                        "DateTime": GetDateTime()
                     }
                 })
                 
