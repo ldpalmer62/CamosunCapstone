@@ -9,3 +9,6 @@ def add_sensor_reading(sensor_data: dict) -> None:
     :param sensor_data: The sensor data to add to the database
     :return: None
     """
+    # Create an instance of SensorReading, and supply the sensor_data dict to it as kwargs
+    # Creating this object will automatically add it into the database
+    SensorReading(**sensor_data)
