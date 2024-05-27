@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-from Model.sensor_reading_entity import SensorReading
 from sqlobject import connectionForURI, sqlhub
 import constants
 from Controller.sensor_readings_controller import add_sensor_reading

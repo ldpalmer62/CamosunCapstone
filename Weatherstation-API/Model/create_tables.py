@@ -1,4 +1,4 @@
-from sensor_reading_entity import SensorReading
+from Model.sensor_reading_entity import SensorReading
 
 
 def create_tables() -> None:
