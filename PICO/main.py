@@ -10,6 +10,7 @@ import board
 import busio
 import digitalio
 from adafruit_bme280 import basic as adafruit_bme280
+import rtc
 
 led = digitalio.DigitalInOut(board.LED)
 led.direction = digitalio.Direction.OUTPUT
@@ -19,6 +20,9 @@ spi = busio.SPI(board.GP10, board.GP11, board.GP12)
 cs = digitalio.DigitalInOut(board.GP13)
 bme280 = adafruit_bme280.Adafruit_BME280_SPI(spi, cs)
 bme280.sea_level_pressure = 1009.4
+
+#Set variable for RTC (Real Time Clock)
+r = rtc.RTC()
 
 #If the device has just been plugged in, send an extra post to the database
 JustBooted = True
@@ -40,11 +44,11 @@ MIN_HUMID = 0.0
 
 #Get the current Date in the format YYYY MM DD
 def GetDate():
-    return(str(time.localtime().tm_year)+" "+str(time.localtime().tm_mon)+" "+str(time.localtime().tm_mday))
+    return(str(r.datetime.tm_year)+" "+str(r.datetime.tm_mon)+" "+str(r.datetime.tm_mday))
 
 #Get the current Time in the format hh mm ss
 def GetTime():
-    return(str(time.localtime().tm_hour)+" "+str(time.localtime().tm_min)+" "+str(time.localtime().tm_sec))
+    return(str(r.datetime.tm_hour)+" "+str(r.datetime.tm_min)+" "+str(r.datetime.tm_sec))
 
 #Get the current Date and Time in the format YYYY MM DD hh mm ss
 def GetDateTime():
@@ -66,8 +70,8 @@ def CheckMinMax(temp, humid):
 
 # Function to wait until next 10 minute increment
 def WaitUntilNextTenMins():
-    timeToSleep = (time.localtime().tm_min % 10) * 60
-    timeToSleep += time.localtime().tm_sec
+    timeToSleep = (r.datetime.tm_min % 10) * 60
+    timeToSleep += r.datetime.tm_sec
     print("Sleeping for " + str(600 - timeToSleep) + " seconds")
     time.sleep(600 - timeToSleep)
 
@@ -83,6 +87,14 @@ while True:
     WIFI = True
     
     print("Connected to WiFi")
+    
+    #Get the current time from worldtimeAPI
+    ### when using time.localtime() it would return jan 1 2020 whenever its ran on its own
+    print("Getting Current Time")
+    response = requests.request("GET", "http://worldtimeapi.org/api/ip")
+    Time = json.loads(response.text)
+    #Set the time for the pi to use, offsets are to account for timezones and daylight savings time
+    r.datetime = time.localtime(Time["unixtime"] + Time["raw_offset"] + Time["dst_offset"])
 
     while WIFI: #If WIFI disconnects, it'll break out of this loop and reconnect automatically
         #Check if temp or humidity are out of safe bounds or if its time for the regular hourly post
