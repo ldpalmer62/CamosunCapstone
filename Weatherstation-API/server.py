@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from sqlobject import connectionForURI, sqlhub
 import constants
 from Controller.sensor_readings_controller import add_sensor_reading
@@ -19,8 +19,8 @@ app = Flask(__name__)
 def add_sensor_reading_route():
     """ Endpoint to add a sensor reading to the database """
     try:
-        add_sensor_reading(request.form.to_dict())
-        return 201  # Return a 201 created response to the client
+        add_sensor_reading(request.get_json())
+        return {}, 201  # Return a 201 created response to the client
     except (ValueError, TypeError) as e:
         # If this function raises either a ValueError or a TypeError, then
         # the data supplied in the request is invalid. So send back an error to the user

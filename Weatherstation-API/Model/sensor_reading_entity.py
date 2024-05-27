@@ -1,4 +1,5 @@
 from sqlobject import SQLObject, FloatCol, DateTimeCol, BoolCol
+import datetime
 
 
 """ This class represents the SensorReading entity, which
@@ -9,5 +10,5 @@ class SensorReading(SQLObject):
     humidity = FloatCol()
     pressure = FloatCol()
     altitude = FloatCol(default=None)  # `default=None` makes it optional
-    date = DateTimeCol()
+    date = DateTimeCol(default=datetime.datetime.now)
     important = BoolCol()

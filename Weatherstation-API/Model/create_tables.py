@@ -8,4 +8,4 @@ def create_tables() -> None:
     BEFORE calling this function
     :return: None
     """
-    SensorReading.createTable()
+    SensorReading.createTable(ifNotExists=True)
