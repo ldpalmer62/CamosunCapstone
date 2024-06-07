@@ -1,4 +1,5 @@
-from Model.sensor_reading_entity import SensorReading
+from Model.SensorReading import SensorReading
+from Model.Sensor import Sensor
 
 
 def create_tables() -> None:
@@ -9,3 +10,4 @@ def create_tables() -> None:
     :return: None
     """
     SensorReading.createTable(ifNotExists=True)
+    Sensor.createTable(ifNotExists=True)
