@@ -1,6 +1,5 @@
 from Model.Sensor import Sensor
-from Controller.get_current_local_time import get_current_local_time
-
+import datetime
 
 def register_sensor(sensor_device_values: dict) -> str:
     """
@@ -13,7 +12,7 @@ def register_sensor(sensor_device_values: dict) -> str:
         raise ValueError("No parameters supplied")
 
     # Add a new Sensor record into the database
-    new_sensor = Sensor(name=sensor_device_values.get('name'), last_active=get_current_local_time())
+    new_sensor = Sensor(name=sensor_device_values.get('name'), last_active=datetime.datetime.now())
 
     # Return the id of the sensor we just created
     return str(new_sensor.id)
