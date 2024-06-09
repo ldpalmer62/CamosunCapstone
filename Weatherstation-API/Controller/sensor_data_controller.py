@@ -31,4 +31,4 @@ def add_sensor_reading(sensor_data: dict) -> None:
 
     # Create an instance of SensorReading, and supply the sensor_data dict to it as kwargs
     # Creating this object will automatically add it into the database
-    SensorReading(sensor=sensor, date=datetime.datetime.now(), **sensor_data)
+    SensorReading(sensor=sensor, **sensor_data)
