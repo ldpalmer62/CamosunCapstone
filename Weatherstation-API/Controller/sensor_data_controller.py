@@ -1,4 +1,7 @@
 import datetime
+
+from pip._internal.utils import datetime
+
 from Model.SensorReading import SensorReading
 from Model.Sensor import Sensor
 
@@ -26,12 +29,6 @@ def add_sensor_reading(sensor_data: dict) -> None:
     # we can pass it as kwargs, since SQLObject won't allow any keys that aren't a part of the entity
     sensor_data.pop('sensor_id')
 
-    # Convert the datetime string into a datetime object that's in the sensor_data dict.
-    # This is because SensorReading's date column is a datetime object, so it won't accept a str being supplied
-    sensor_data.update({
-        'date': datetime.datetime.fromisoformat(sensor_data.get('date'))
-    })
-
     # Create an instance of SensorReading, and supply the sensor_data dict to it as kwargs
     # Creating this object will automatically add it into the database
-    SensorReading(sensor=sensor, **sensor_data)
+    SensorReading(sensor=sensor, date=datetime.datetime.now(), **sensor_data)
