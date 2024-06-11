@@ -11,6 +11,7 @@ import busio
 import digitalio
 from adafruit_bme280 import basic as adafruit_bme280
 import rtc
+import Settings
 
 led = digitalio.DigitalInOut(board.LED)
 led.direction = digitalio.Direction.OUTPUT
@@ -21,14 +22,17 @@ cs = digitalio.DigitalInOut(board.GP13)
 bme280 = adafruit_bme280.Adafruit_BME280_SPI(spi, cs)
 bme280.sea_level_pressure = 1009.4
 
-#Set variable for RTC (Real Time Clock)
+#Set variable for RTC (Real Time Clock) 
 r = rtc.RTC()
 
 #If the device has just been plugged in, send an extra post to the database
 JustBooted = True
 
+ID = None
+
+
 #API URL // To be changed to RaspberryPi IP or URL
-url = "https://us-west-2.aws.data.mongodb-api.com/app/data-fvikqyr/endpoint/data/v1/action/"
+url = Settings.URL
 
 ###---Units---###
 #Pressure: hPa
@@ -74,6 +78,51 @@ def WaitUntilNextTenMins():
     timeToSleep += r.datetime.tm_sec
     print("Sleeping for " + str(600 - timeToSleep) + " seconds")
     time.sleep(600 - timeToSleep)
+    
+def GetNewID():
+    try:
+        payload = json.dumps({"name": Settings.NAME})
+        #response = requests.request("POST", url, data=payload)
+        #response.raise_for_status()  # Raise an exception for HTTP errors
+        #response_json = response.json()
+        
+        #id_value = response_json.get("sensor_id")  # Get the value for the key "sensor_id", or None if the key doesn't exist
+        
+        #if id_value is not None:
+        if True:
+            with open("ID.txt", 'w') as file:
+                #file.write(id_value)
+                file.write("3")
+            ID = "3"
+        else:
+            print("Invalid response format: 'sensor_id' key not found in response JSON")
+    except:
+        print("Error fetching new ID")
+
+
+# Function to load an ID from a file
+def LoadID():
+    try:
+        with open("ID.txt", 'r') as file:
+            print(file.read())
+            if(not file.read().strip() == "0"):
+                return(file.read().strip())
+            else:
+                return None
+    except OSError:
+        return None
+    
+def BuildWeatherPayload():
+    return(
+        json.dumps({
+            "sensor_id": ID,
+            "temperature": bme280.temperature,
+            "humidity": bme280.relative_humidity,
+            "pressure": bme280.pressure,
+            "altitude": bme280.altitude,
+            "important": CheckMinMax(bme280.temperature, bme280.relative_humidity)
+        })
+    )
 
 while True:
     
@@ -95,8 +144,18 @@ while True:
     Time = json.loads(response.text)
     #Set the time for the pi to use, offsets are to account for timezones and daylight savings time
     r.datetime = time.localtime(Time["unixtime"] + Time["raw_offset"] + Time["dst_offset"])
-
+    
+    ID = LoadID()
+    
+    if not ID:
+        GetNewID()
+        
+    
     while WIFI: #If WIFI disconnects, it'll break out of this loop and reconnect automatically
+        
+        
+                
+            
         #Check if temp or humidity are out of safe bounds or if its time for the regular hourly post
         if(CheckMinMax(bme280.temperature, bme280.relative_humidity) or time.localtime().tm_min < 10 or JustBooted):
             JustBooted = False
@@ -115,7 +174,6 @@ while True:
                         "Temperature": bme280.temperature,
                         "Humidity": bme280.relative_humidity,
                         "Pressure": bme280.pressure,
-                        "Altitude": bme280.altitude,
                         "DateTime": GetDateTime(),
                         "Important": CheckMinMax(bme280.temperature, bme280.relative_humidity)
                     }
@@ -125,8 +183,10 @@ while True:
                 headers = {
                   'Content-Type': 'application/json',
                   'Access-Control-Request-Headers': '*',
-                  'api-key': 'sBg2VErjv87Dz4zMP4fq8EbYeaxDNreb3eOwJnYH9WCWs37AF2ocbOox9oAwzJxF',
+                  'api-key': os.getenv('APIKEY'),
                 }
+                
+                #payload = BuildWeatherPayload()
                 
                 #Send post to database
                 response = requests.request("POST", url + "insertOne", headers=headers, data=payload)
