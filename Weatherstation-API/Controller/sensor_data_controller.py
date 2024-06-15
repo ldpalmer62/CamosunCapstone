@@ -48,5 +48,12 @@ def get_latest_sensor_data(sensor_id):
     if not query:
         return None
 
-    # TODO: Overload the __dict__() method in the SensorReading entity to convert the result into a dict
-    return dict(query[0])
+    sensor_reading = query[0]
+
+    return {
+        'temperature': sensor_reading.temperature,
+        'humidity': sensor_reading.humidity,
+        'pressure': sensor_reading.pressure,
+        'altitude': sensor_reading.altitude,
+        'date': sensor_reading.date
+    }
