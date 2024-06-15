@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, make_response
 from sqlobject import connectionForURI, sqlhub
 import constants
-from Controller.sensor_data_controller import add_sensor_reading
+from Controller.sensor_data_controller import add_sensor_reading, get_latest_sensor_data
 from Controller.sensor_controller import register_sensor
 from Controller.get_current_local_time import get_current_local_time
 from Model.create_tables import create_tables
@@ -65,3 +65,17 @@ def get_current_time_route():
     return {
         'datetime': str(get_current_local_time())
     }, 200
+
+
+@app.get('/get_latest_sensor_data')
+def get_latest_sensor_data_route():
+    try:
+        return get_latest_sensor_data(request.args.get('id')), 200
+    except ValueError as e:
+        return {
+            'error': str(e)
+        }, 400
+    except LookupError as e:
+        return {
+            'error': 'No sensor with the corresponding id is registered'
+        }, 403

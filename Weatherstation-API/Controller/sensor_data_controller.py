@@ -1,9 +1,8 @@
-import datetime
-
-from pip._internal.utils import datetime
-
+import sqlobject.main
+import json
 from Model.SensorReading import SensorReading
 from Model.Sensor import Sensor
+from sqlobject import AND
 
 
 def add_sensor_reading(sensor_data: dict) -> None:
@@ -32,3 +31,22 @@ def add_sensor_reading(sensor_data: dict) -> None:
     # Create an instance of SensorReading, and supply the sensor_data dict to it as kwargs
     # Creating this object will automatically add it into the database
     SensorReading(sensor=sensor, **sensor_data)
+
+
+def get_latest_sensor_data(sensor_id):
+    if not sensor_id:
+        raise ValueError()
+
+    # If the sensor is not found, then raise a LookupError
+    try:
+        Sensor.get(int(sensor_id))
+    except sqlobject.main.SQLObjectNotFound:
+        raise LookupError()
+
+    query = list(filter(lambda x: x.sensor.id == int(sensor_id), list(SensorReading.select(orderBy='date'))))
+
+    if not query:
+        return None
+
+    # TODO: Overload the __dict__() method in the SensorReading entity to convert the result into a dict
+    return dict(query[0])

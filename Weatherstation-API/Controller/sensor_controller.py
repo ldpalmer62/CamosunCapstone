@@ -1,6 +1,7 @@
 from Model.Sensor import Sensor
 import datetime
 
+
 def register_sensor(sensor_device_values: dict) -> str:
     """
     This controller function takes in a dictionary containing
