@@ -1,0 +1,187 @@
+/* General body styling */
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #f0f0f0;
+  color: #333;
+}
+
+/* Header styling */
+header {
+  background: #12253E;
+  color: #fff;
+  padding: 5px;
+  position: relative;
+  display: flex; 
+  align-items: center; 
+  border-bottom: 4px solid #fff;
+}
+
+/* Logo positioning in header */
+header .logo {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  width: 100px;
+  height: 60px;
+}
+
+/* Header title styling */
+header h1 {
+  margin: 0;
+  font-size: 40px;
+  font-weight: bold;
+  font-family: Arial;
+  padding-top: 10px;
+  padding-left: 130px;
+}
+
+/* Navigation menu styling */
+nav ul {
+  list-style: none;
+  padding-left: 250px;
+  padding-top: 20px;
+  margin: 0;
+  display: flex;
+}
+
+/* Navigation menu item styling */
+nav ul li {
+  padding-right: 10px;
+}
+
+/* Navigation link styling */
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: Arial;
+}
+
+/* Main content area styling */
+main {
+  padding: 0;
+  text-align: center;
+  background: url('sources/background.jpg') no-repeat center center;
+  background-size: cover;
+  min-height: calc(100vh - 120px); /* Adjust this calculation if header and footer heights change */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Footer styling */
+footer {
+  background: #12253E;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 20px;
+  font-family: Arial;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  border-top: 4px solid #fff;
+}
+
+/* Dashboard content styling */
+.dashboard-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: #fff;
+  
+}
+
+/* Widget styling */
+.widget {
+  width: 45%;
+  height: 200px;
+  margin: 10px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+/* Temperature widget styling */
+.temperature {
+  background: #00bfff;
+}
+.temperature .temp-description {
+  font-size: 24px;  
+  font-weight: bold;
+  margin: 0;
+}
+.temperature .temp-value {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Humidity widget styling */
+.humidity {
+  background: #ffdf00;
+}
+.humidity .humd-description {
+  font-size: 24px;  
+  font-weight: bold;
+  margin: 0;
+}
+.humidity .humd-value {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 0;
+}
+
+
+/* Pressure widget styling */
+.pressure {
+  background: #ff6347;
+}
+.pressure .pres-description {
+  font-size: 24px;  
+  font-weight: bold;
+  margin: 0;
+}
+.pressure .pres-value {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Altitude widget styling */
+.altitude {
+  background: #32cd32;
+  font-size: 24px;  
+  font-weight: bold;
+}
+.altitude .alt-description {
+  font-size: 24px;  
+  font-weight: bold;
+  margin: 0;
+}
+.altitude .alt-value {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* About content styling */
+.about-content {
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+
+
+
+
+
