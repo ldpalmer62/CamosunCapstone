@@ -28,6 +28,7 @@ r = rtc.RTC()
 #If the device has just been plugged in, send an extra post to the database
 JustBooted = True
 
+global ID
 ID = None
 
 
@@ -82,35 +83,35 @@ def WaitUntilNextTenMins():
 def GetNewID():
     try:
         payload = json.dumps({"name": Settings.NAME})
-        #response = requests.request("POST", url, data=payload)
-        #response.raise_for_status()  # Raise an exception for HTTP errors
-        #response_json = response.json()
+        headers = {'Content-Type': 'application/json'}
+        response = requests.request("POST", url + "/register_sensor", data=payload, headers=headers)
+        response_json = json.loads(response.text)
+        id_value = response_json.get("sensor_id")  # Get the value for the key "sensor_id", or None if the key doesn't exist
         
-        #id_value = response_json.get("sensor_id")  # Get the value for the key "sensor_id", or None if the key doesn't exist
-        
-        #if id_value is not None:
-        if True:
+        if id_value is not None:
             with open("ID.txt", 'w') as file:
-                #file.write(id_value)
-                file.write("3")
-            ID = "3"
+                file.write(str(id_value))
+            ID = str(id_value)
         else:
             print("Invalid response format: 'sensor_id' key not found in response JSON")
-    except:
+    except Exception as e:
         print("Error fetching new ID")
+        print(e)
 
 
 # Function to load an ID from a file
 def LoadID():
+    global ID
     try:
         with open("ID.txt", 'r') as file:
-            print(file.read())
             if(not file.read().strip() == "0"):
-                return(file.read().strip())
+                file.seek(0)
+                ID = str(file.read())
+                print(ID)
             else:
-                return None
+                ID = None
     except OSError:
-        return None
+        ID = None
     
 def BuildWeatherPayload():
     return(
@@ -142,19 +143,19 @@ while True:
     print("Getting Current Time")
     response = requests.request("GET", "http://worldtimeapi.org/api/ip")
     Time = json.loads(response.text)
+    #print(response.text)
     #Set the time for the pi to use, offsets are to account for timezones and daylight savings time
+    #2024-06-15 16:00:14.635877
+    #print(datetime.strptime(Time["datetime"]))
     r.datetime = time.localtime(Time["unixtime"] + Time["raw_offset"] + Time["dst_offset"])
     
-    ID = LoadID()
-    
+    LoadID()
+    print("loaded id = " + str(ID))
     if not ID:
         GetNewID()
         
-    
+        
     while WIFI: #If WIFI disconnects, it'll break out of this loop and reconnect automatically
-        
-        
-                
             
         #Check if temp or humidity are out of safe bounds or if its time for the regular hourly post
         if(CheckMinMax(bme280.temperature, bme280.relative_humidity) or time.localtime().tm_min < 10 or JustBooted):
@@ -166,30 +167,30 @@ while True:
                 led.value = True
                 
                 #Payload to send to endpoint // For now just Mongodb API
-                payload = json.dumps({
-                    "collection": "PICO",
-                    "database": "Weather",
-                    "dataSource": "Cluster0",
-                    "document": {
-                        "Temperature": bme280.temperature,
-                        "Humidity": bme280.relative_humidity,
-                        "Pressure": bme280.pressure,
-                        "DateTime": GetDateTime(),
-                        "Important": CheckMinMax(bme280.temperature, bme280.relative_humidity)
-                    }
-                })
+                #payload = json.dumps({
+                #    "collection": "PICO",
+                #    "database": "Weather",
+                #    "dataSource": "Cluster0",
+                #    "document": {
+                #        "Temperature": bme280.temperature,
+                #        "Humidity": bme280.relative_humidity,
+                #        "Pressure": bme280.pressure,
+                #        "DateTime": GetDateTime(),
+                #        "Important": CheckMinMax(bme280.temperature, bme280.relative_humidity)
+                #    }
+                #})
                 
                 #Headers for endpoint 
                 headers = {
                   'Content-Type': 'application/json',
-                  'Access-Control-Request-Headers': '*',
-                  'api-key': os.getenv('APIKEY'),
+                #  'Access-Control-Request-Headers': '*',
+                #  'api-key': os.getenv('APIKEY'),
                 }
                 
-                #payload = BuildWeatherPayload()
+                payload = BuildWeatherPayload()
                 
                 #Send post to database
-                response = requests.request("POST", url + "insertOne", headers=headers, data=payload)
+                response = requests.request("POST", url + "/add_sensor_reading", data=payload, headers=headers)
                 
                 #For debugging if post was successful 
                 print(response.text)
