@@ -63,7 +63,7 @@ def get_current_time_route():
     the datetime is sent in the response as a string in ISO format
     """
     return {
-        'datetime': str(get_current_local_time())
+        'datetime': float(get_current_local_time())
     }, 200
 
 
