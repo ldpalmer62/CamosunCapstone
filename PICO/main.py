@@ -141,13 +141,12 @@ while True:
     #Get the current time from worldtimeAPI
     ### when using time.localtime() it would return jan 1 2020 whenever its ran on its own
     print("Getting Current Time")
-    response = requests.request("GET", "http://worldtimeapi.org/api/ip")
+    response = requests.request("GET", url + "/get_current_time")
     Time = json.loads(response.text)
     #print(response.text)
-    #Set the time for the pi to use, offsets are to account for timezones and daylight savings time
-    #2024-06-15 16:00:14.635877
-    #print(datetime.strptime(Time["datetime"]))
-    r.datetime = time.localtime(Time["unixtime"] + Time["raw_offset"] + Time["dst_offset"])
+    #Set the time for the pi to use
+    r.datetime = time.localtime(Time["datetime"])
+    print(GetDate())
     
     LoadID()
     print("loaded id = " + str(ID))
@@ -166,7 +165,10 @@ while True:
                 #turn on LED to show that a post is being made
                 led.value = True
                 
-                #Payload to send to endpoint // For now just Mongodb API
+                
+                #This section is for a mongoDB database
+                
+                #Payload to send to endpoint
                 #payload = json.dumps({
                 #    "collection": "PICO",
                 #    "database": "Weather",
@@ -182,9 +184,7 @@ while True:
                 
                 #Headers for endpoint 
                 headers = {
-                  'Content-Type': 'application/json',
-                #  'Access-Control-Request-Headers': '*',
-                #  'api-key': os.getenv('APIKEY'),
+                  'Content-Type': 'application/json'
                 }
                 
                 payload = BuildWeatherPayload()
