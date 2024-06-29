@@ -1,3 +1,4 @@
+/* CSS */
 /* General body styling */
 body {
   margin: 0;
@@ -91,7 +92,6 @@ footer {
   flex-wrap: wrap;
   justify-content: space-around;
   background-color: #fff;
-  
 }
 
 /* Widget styling */
@@ -137,7 +137,6 @@ footer {
   margin: 0;
 }
 
-
 /* Pressure widget styling */
 .pressure {
   background: #ff6347;
@@ -180,8 +179,105 @@ footer {
   border-radius: 10px;
 }
 
+/* Button container styling */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Add space between buttons */
+}
 
+/* Button styling */
+button {
+  padding: 10px 20px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
+.temp-button {
+  background-color: #007bff;
+}
+.temp-button:hover {
+  background-color: #0056b3;
+}
 
+.prev-temp-button {
+  background-color: #007bff;
+}
+.prev-temp-button:hover {
+  background-color: #0056b3;
+}
 
+.humd-button {
+  background-color: #FFC300;
+}
+.humd-button:hover {
+  background-color: #FFFF00;
+}
 
+.prev-humd-button {
+  background-color: #FFC300;
+}
+.prev-humd-button:hover {
+  background-color: #FFFF00;
+}
+
+.pres-button {
+  background-color: #FF4500;
+}
+.pres-button:hover {
+  background-color: #FF5237;
+}
+
+.prev-pres-button {
+  background-color: #FF4500;
+}
+.prev-pres-button:hover {
+  background-color: #FF5237;
+}
+
+.alt-button {
+  background-color: #228B22;
+}
+.alt-button:hover {
+  background-color: #3CB371;
+}
+
+.prev-alt-button {
+  background-color: #228B22;
+}
+.prev-alt-button:hover {
+  background-color: #3CB371;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+  background-color: #4CAF50;
+  color: white;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #ffdab9; 
+}
+
+tbody tr:nth-child(even) {
+  background-color: #d0f0c0; 
+}
+
+tbody tr:hover {
+  background-color: #ddd;
+}

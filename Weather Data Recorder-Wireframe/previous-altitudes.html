@@ -4,16 +4,15 @@
         <!-- Meta information for character encoding and responsive design -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Weather Data Recorder</title>
+        <title>Previous Altitudes</title>
         <!-- Link to external CSS stylesheet -->
         <link rel="stylesheet" href="styles.css">
     </head>
-
     <body>
         <!-- Header section containing logo, title, and navigation menu -->
         <header>
             <img src="sources/raspberry-pi-logo.png" alt="Raspberry Pi Logo" class="logo">
-            <h1>Weather Data Recorder</h1>
+            <h1>Previous Altitudes</h1>
             <nav>
                 <ul>
                     <li><a href="index.html">Home</a></li>
@@ -25,14 +24,31 @@
 
         <!-- Main content section -->
         <main>
-            <section class="homepage-content">   
-            </section>
+            <!-- Table to display time and altitudes records -->
+            <table>
+                <!-- Table header defining column names -->
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Altitudes (meters)</th>
+                    </tr>
+                </thead>
+
+                <!-- Table body where rows will be dynamically added by JavaScript -->
+                <tbody id="altitudes-table-body">
+                    <!-- Rows will be added dynamically here -->
+                </tbody>
+            </table>
         </main>
-        
+
         <!-- Footer section -->
         <footer>
             <p>Copyright &copy; 2024 - Victoria PiMakers</p>
         </footer>
-        
+
+        <!-- Link to external JavaScript file -->
+        <script src="scripts/previous-altitudes.js"></script>
+        <!-- JavaScript -->
+
     </body>
 </html>

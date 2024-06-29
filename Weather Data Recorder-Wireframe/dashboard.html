@@ -30,32 +30,64 @@
                 <!-- Widget for displaying temperature -->
                 <div class="widget temperature">
                     <p class="temp-description">Temperature</p>
-                    <p class="temp-value">25 °C</p>
+                    <p class="temp-value" id="temp-value">25 °C</p>
+
+                    <div class="button-container">
+                        <button class="temp-button" id="temp-button">Update</button>
+                        <button class="prev-temp-button" id="prev-temp-button">History</button>
+                    </div>
                 </div>
 
                 <!-- Widget for displaying humidity -->
                 <div class="widget humidity">
                     <p class="humd-description">Humidity</p>
-                    <p class="humd-value">30 %</p>
+                    <p class="humd-value" id="humd-value">30 %</p>
+
+                    <div class="button-container">
+                        <button class="humd-button" id="humd-button">Update</button>
+                        <button class="prev-humd-button" id="prev-humd-button">History</button>
+                    </div>
                 </div>
 
                 <!-- Widget for displaying pressure -->
                 <div class="widget pressure">
                     <p class="pres-description">Pressure</p>
-                    <p class="pres-value">1018.5 hPa</p>
+                    <p class="pres-value" id="pres-value">1018.5 hPa</p>
+
+                    <div class="button-container">
+                        <button class="pres-button" id="pres-button">Update</button>
+                        <button class="prev-pres-button" id="prev-pres-button">History</button>
+                    </div>
                 </div>
 
                 <!-- Widget for displaying altitude -->
                 <div class="widget altitude">
                     <p class="alt-description">Altitude</p>
-                    <p class="alt-value">44.03 meters</p>
+                    <p class="alt-value" id="alt-value">44.03 meters</p>
+
+                    <div class="button-container">
+                        <button class="alt-button" id="alt-button">Update</button>
+                        <button class="prev-alt-button" id="prev-alt-button">History</button>
+                    </div>
                 </div>
             </section>
         </main>
+
+
 
         <!-- Footer section -->
         <footer>
         <p>Copyright &copy; 2024 - Victoria PiMakers</p>
         </footer>
+
+
+     
+        <!-- Link to external JavaScript file -->
+        <script src="scripts/dashboard.js"></script>
+        <script src="scripts/previous-temperatures.js"></script>
+        <script src="scripts/previous-humidity.js"></script>
+    
+
+
     </body>
 </html>
