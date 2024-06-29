@@ -2,7 +2,8 @@ import sqlobject.main
 import json
 from Model.SensorReading import SensorReading
 from Model.Sensor import Sensor
-from sqlobject import AND
+from sqlobject import DESC
+from sqlobject.sqlbuilder import SQLConstant, AND
 
 
 def add_sensor_reading(sensor_data: dict) -> None:
@@ -43,7 +44,7 @@ def get_latest_sensor_data(sensor_id):
     except sqlobject.main.SQLObjectNotFound:
         raise LookupError()
 
-    query = list(filter(lambda x: x.sensor.id == int(sensor_id), list(SensorReading.select(orderBy='date'))))
+    query = SensorReading.select(SensorReading.q.sensorID == sensor_id, orderBy=DESC(SensorReading.q.date))
 
     if not query:
         return None
