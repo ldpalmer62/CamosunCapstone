@@ -6,6 +6,7 @@ from Controller.sensor_controller import register_sensor
 from Controller.get_current_local_time import get_current_local_time
 from Model.create_tables import create_tables
 from sqlobject.dberrors import DuplicateEntryError
+from flask_cors import CORS
 
 # Create a connection to the SQLite database
 sqlite_connection = connectionForURI(constants.DATABASE_PATH)
@@ -16,6 +17,7 @@ create_tables()
 
 # Create the Flask instance, this will be used to create the api endpoints
 app = Flask(__name__)
+CORS(app)
 
 
 @app.post('/add_sensor_reading')
