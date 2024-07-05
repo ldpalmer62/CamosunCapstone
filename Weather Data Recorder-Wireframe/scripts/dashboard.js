@@ -124,19 +124,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('temp-button').addEventListener('click', async () => {
         try {
             const BASE_URL = "http://205.250.221.237:8080";
-            const response = await fetch(BASE_URL + "/get_latest_sensor_data?id=2", {
-                mode: 'no-cors'
-            });
-            // if (!response.ok) {
-            //     throw new Error('Network response was not ok ' + response.statusText);
-            // }
+            const response = await fetch(BASE_URL + "/get_latest_sensor_data?id=2");
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
             const data = await response.json();
             console.log('Data:', data);
-            // if (data.temperature !== undefined) {
-            //     document.getElementById('temp-value').innerText = data.temperature + ' °C';
-            // } else {
-            //     console.error('No temperature data received');
-            // }
+            if (data.temperature !== undefined) {
+                document.getElementById('temp-value').innerText = data.temperature + ' °C';
+            } else {
+                console.error('No temperature data received');
+            }
         } catch (error) {
             console.error('Error fetching temperature data:', error);
         }
