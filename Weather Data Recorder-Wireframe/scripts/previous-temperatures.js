@@ -22,7 +22,7 @@
 
 
 
-const LoadGraph = async (month) => {
+const LoadGraph = async (month, year) => {
   var dataLow = [];
   var dataHigh = [];
   var dataAvg = [];
@@ -30,14 +30,14 @@ const LoadGraph = async (month) => {
     let ranHigh = Math.random();
     let ranLow = ranHigh * Math.random();
     let ranAvg = (ranLow + ranHigh)/2;
-    dataHigh.push({ x: new Date(2024, 6, i), y: (ranHigh * (26.0 - 19.0)) + 19.0 });
-    dataLow.push({ x: new Date(2024, 6, i), y: (ranLow * (26.0 - 19.0)) + 19.0 });
-    dataAvg.push({ x: new Date(2024, 6, i), y: (ranAvg * (26.0 - 19.0)) + 19.0 });
+    dataHigh.push({ x: new Date(year, MonthToNumber(month)-1, i), y: (ranHigh * (26.0 - 19.0)) + 19.0 });
+    dataLow.push( { x: new Date(year, MonthToNumber(month)-1, i), y: (ranLow *  (26.0 - 19.0)) + 19.0 });
+    dataAvg.push( { x: new Date(year, MonthToNumber(month)-1, i), y: (ranAvg *  (26.0 - 19.0)) + 19.0 });
   }
   var chart = new CanvasJS.Chart("chartContainer",
   {
     title:{
-      text: "Temperature History for " + month + " 2024"
+      text: "Temperature History for " + month + " " + year
     },
       data: [
     {
@@ -57,10 +57,42 @@ const LoadGraph = async (month) => {
   chart.render();
 }
 
+const MonthToNumber = month => {
+  switch (month){
+    case "January":
+      return 1;
+    case "February":
+      return 2;
+    case "March":
+      return 3;
+    case "April":
+      return 4;
+    case "May":
+      return 5;
+    case "June":
+      return 6;
+    case "July":
+      return 7;
+    case "August":
+      return 8;
+    case "September":
+      return 9;
+    case "October":
+      return 10;
+    case "November":
+      return 11;
+    case "December":
+      return 12;
+  }
+}
+
 document.addEventListener("DOMContentLoaded", async() => {
-  LoadGraph("June");
+  LoadGraph(document.getElementById("month").value, document.getElementById("year").value);
 });
 
 document.getElementById("month").onchange = () => {
-  LoadGraph(document.getElementById("month").value)
+  LoadGraph(document.getElementById("month").value, document.getElementById("year").value);
+}
+document.getElementById("year").onchange = () => {
+  LoadGraph(document.getElementById("month").value, document.getElementById("year").value);
 }
