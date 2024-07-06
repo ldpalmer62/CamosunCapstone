@@ -22,6 +22,44 @@
 
 
 
+
+
+const fetchHistoricalData = async (sensorID, month, year) => {
+  // Read from local storage
+  try {
+      const data = localStorage.getItem('latest_sensor_data');
+      if (data) {
+          return JSON.parse(data);
+      }
+  } catch (error) {
+      console.error('Error fetching historical data:', error);
+      return null;
+  }
+};
+
+
+
+// const LoadGraph = async (sensorID, month, year) => {
+//   const data = await fetchHistoricalData(sensorID, month, year);
+//   if (!data) {
+//       console.error('No data available');
+//       return;
+//   }
+
+//   const dataLow = [];
+//   const dataHigh = [];
+//   const dataAvg = [];
+  
+
+//   // Assuming we only have one data point for the latest data
+//   const date = new Date(data.timestamp);
+//   dataHigh.push({ x: date, y: data.temperature });
+//   dataLow.push({ x: date, y: data.temperature });
+//   dataAvg.push({ x: date, y: data.temperature });
+
+  
+// };
+
 const LoadGraph = async (month, year) => {
   var dataLow = [];
   var dataHigh = [];
@@ -34,6 +72,26 @@ const LoadGraph = async (month, year) => {
     dataLow.push( { x: new Date(year, MonthToNumber(month)-1, i), y: (ranLow *  (26.0 - 19.0)) + 19.0 });
     dataAvg.push( { x: new Date(year, MonthToNumber(month)-1, i), y: (ranAvg *  (26.0 - 19.0)) + 19.0 });
   }
+
+
+  // const data = await fetchHistoricalData(sensorID, month, year);
+  // if (!data) {
+  //     console.error('No data available');
+  //     return;
+  // }
+
+  // const dataLow = [];
+  // const dataHigh = [];
+  // const dataAvg = [];
+  
+
+  // // Assuming we only have one data point for the latest data
+  // const date = new Date(data.timestamp);
+  // dataHigh.push({ x: date, y: data.temperature });
+  // dataLow.push({ x: date, y: data.temperature });
+  // dataAvg.push({ x: date, y: data.temperature });
+
+
   CanvasJS.addColorSet("Temperature",
     [//colorSet Array
 
@@ -118,3 +176,12 @@ document.getElementById("month").onchange = () => {
 document.getElementById("year").onchange = () => {
   LoadGraph(document.getElementById("month").value, document.getElementById("year").value);
 }
+
+
+
+
+
+
+
+
+
