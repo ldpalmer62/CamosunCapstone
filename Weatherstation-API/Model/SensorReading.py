@@ -11,5 +11,5 @@ class SensorReading(SQLObject):
     humidity = FloatCol()
     pressure = FloatCol()
     altitude = FloatCol(default=None)  # `default=None` makes it optional
-    date = DateTimeCol(default=datetime.datetime.now())
+    date = DateTimeCol(default=lambda: datetime.datetime.now())
     important = BoolCol()
