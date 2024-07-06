@@ -62,7 +62,7 @@ nav ul li a {
 
 /* Main content area styling */
 main {
-  padding: 0;
+  padding: 5px;
   text-align: center;
   background: url('sources/background.jpg') no-repeat center center;
   background-size: cover;
@@ -92,6 +92,8 @@ footer {
   flex-wrap: wrap;
   justify-content: space-around;
   background-color: #fff;
+  border-radius: 10px;
+  padding: 5px;
 }
 
 /* Widget styling */

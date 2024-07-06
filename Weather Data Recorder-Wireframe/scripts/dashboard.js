@@ -120,27 +120,52 @@
 
 
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('temp-button').addEventListener('click', async () => {
-        try {
-            const BASE_URL = "http://205.250.221.237:8080";
-            const response = await fetch(BASE_URL + "/get_latest_sensor_data?id=2");
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            const data = await response.json();
-            console.log('Data:', data);
-            if (data.temperature !== undefined) {
-                document.getElementById('temp-value').innerText = data.temperature + ' °C';
-            } else {
-                console.error('No temperature data received');
-            }
-        } catch (error) {
-            console.error('Error fetching temperature data:', error);
-        }
-    });
-});
+//document.getElementById('temp-button').addEventListener('click', async () => {
+//    try {
+//        const BASE_URL = "http://205.250.221.237:8080";
+//        const response = await fetch(BASE_URL + "/get_latest_sensor_data?id=2");
+//        if (!response.ok) {
+//            throw new Error('Network response was not ok ' + response.statusText);
+//        }
+//        const data = await response.json();
+//        console.log('Data:', data);
+//        if (data.temperature !== undefined) {
+//            document.getElementById('temp-value').innerText = data.temperature + ' °C';
+//        } else {
+//            console.error('No temperature data received');
+//        }
+//    } catch (error) {
+//        console.error('Error fetching temperature data:', error);
+//    }
+//});
 
+/// Loads/Refreshes all fields on the dashboard with updated data
+const LoadData = async (sensorID) => {
+    try{
+        const BASE_URL = "http://205.250.221.237:8080";
+        const response = await fetch(BASE_URL + "/get_latest_sensor_data?id=" + sensorID);
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        const data = await response.json();
+        if (data.temperature !== undefined) {
+            document.getElementById('temp-value').innerText = data.temperature + ' °C';
+            document.getElementById('humd-value').innerText = data.humidity + ' %';
+            document.getElementById('pres-value').innerText = data.pressure + ' hPa';
+            document.getElementById('alt-value').innerText = data.altitude + ' m';
+        } else {
+            console.error('No data received');
+        }
+    }
+    catch (error) {
+        console.error('Error loading data: ', error);
+    }
+}
+
+/// Runs needed functions when page is loaded
+document.addEventListener("DOMContentLoaded", async () => {
+    LoadData(2);
+});
 
 
 
