@@ -105,14 +105,17 @@ const LoadGraph = async (month, year) => {
   {
     backgroundColor: "#ddddFF",
     colorSet: "Temperature",
+
     legend: {
       horizontalAlign: "left", // "center" , "right"
       verticalAlign: "center",  // "top" , "bottom"
       fontSize: 15
     },
+
     title:{
       text: "Temperature History for " + month + " " + year
     },
+
     data: [
       {
         showInLegend: true,
@@ -137,6 +140,9 @@ const LoadGraph = async (month, year) => {
   chart.render();
 }
 
+
+///Converts a string of a month to the number of a month
+///EX: MonthToNumber("July") returns 7
 const MonthToNumber = month => {
   switch (month){
     case "January":
@@ -166,10 +172,12 @@ const MonthToNumber = month => {
   }
 }
 
+//When page loads, load a default graph
 document.addEventListener("DOMContentLoaded", async() => {
   LoadGraph(document.getElementById("month").value, document.getElementById("year").value);
 });
 
+//When user selects month and year, update the graph to reflect it
 document.getElementById("month").onchange = () => {
   LoadGraph(document.getElementById("month").value, document.getElementById("year").value);
 }
