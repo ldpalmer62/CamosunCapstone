@@ -34,24 +34,46 @@ const LoadGraph = async (month, year) => {
     dataLow.push( { x: new Date(year, MonthToNumber(month)-1, i), y: (ranLow *  (26.0 - 19.0)) + 19.0 });
     dataAvg.push( { x: new Date(year, MonthToNumber(month)-1, i), y: (ranAvg *  (26.0 - 19.0)) + 19.0 });
   }
+  CanvasJS.addColorSet("Temperature",
+    [//colorSet Array
+
+    "#CC0000",
+    "#00CC00",
+    "#0000CC",
+    "#3CB371",
+    "#90EE90"                
+    ]);
   var chart = new CanvasJS.Chart("chartContainer",
   {
+    backgroundColor: "#ddddFF",
+    colorSet: "Temperature",
+    legend: {
+      horizontalAlign: "left", // "center" , "right"
+      verticalAlign: "center",  // "top" , "bottom"
+      fontSize: 15
+    },
     title:{
       text: "Temperature History for " + month + " " + year
     },
-      data: [
-    {
-      type: "line",
-      dataPoints: dataLow
-    },
-    {
-      type: "line",
-      dataPoints: dataHigh
-    },
-    {
-      type: "line",
-      dataPoints: dataAvg
-    }
+    data: [
+      {
+        showInLegend: true,
+        legendText: "High",
+        type: "line",
+        dataPoints: dataHigh
+      },
+      {
+        showInLegend: true,
+        legendText: "Average",
+        type: "line",
+        dataPoints: dataAvg
+      },
+      {
+        showInLegend: true,
+        type: "line",
+        legendText: "Low",
+        dataPoints: dataLow
+      }
     ]
   });
   chart.render();
