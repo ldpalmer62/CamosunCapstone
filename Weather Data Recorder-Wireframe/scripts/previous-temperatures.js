@@ -60,6 +60,7 @@ const fetchHistoricalData = async (sensorID, month, year) => {
   
 // };
 
+
 const LoadGraph = async (month, year) => {
   var dataLow = [];
   var dataHigh = [];
@@ -92,15 +93,16 @@ const LoadGraph = async (month, year) => {
   // dataAvg.push({ x: date, y: data.temperature });
 
 
-  CanvasJS.addColorSet("Temperature",
-    [//colorSet Array
-
-    "#CC0000",
-    "#00CC00",
-    "#0000CC",
-    "#3CB371",
-    "#90EE90"                
-    ]);
+  CanvasJS.addColorSet(
+    "Temperature",
+    [
+      "#CC0000",//High
+      "#00CC00",//Avg
+      "#0000CC",//Low
+      "#3CB371",
+      "#90EE90"                
+    ]
+  );
   var chart = new CanvasJS.Chart("chartContainer",
   {
     backgroundColor: "#ddddFF",
