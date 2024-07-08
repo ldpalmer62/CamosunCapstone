@@ -58,3 +58,34 @@ def get_latest_sensor_data(sensor_id):
         'altitude': sensor_reading.altitude,
         'date': sensor_reading.date
     }
+
+
+def get_sensor_data_list(sensor_id, time_period: str):
+    """
+    Gets a list of sensor data records over a period of time.
+    For example, if time_period is set to day, all the records
+    that were inserted on the current day will be retrieved.
+    """
+    if time_period not in ('day', 'month', 'year'):
+        raise ValueError('time_period value must be either day, month, or year')
+
+    try:
+        Sensor.get(int(sensor_id))
+    except sqlobject.main.SQLObjectNotFound:
+        raise LookupError()
+
+    sensor_data_records = list(SensorReading.select(SensorReading.q.sensorID == sensor_id,
+                                                    orderBy=SensorReading.q.date))
+
+    match time_period:
+        case 'day':
+            # sensor_data_records = filter(lambda x: x.get('date'), sensor_data_records)
+            print(sensor_data_records)
+
+        case 'month':
+            # sensor_data_records = filter(lambda x: x.get('date'), sensor_data_records)
+            print(sensor_data_records)
+
+        case 'year':
+            # sensor_data_records = filter(lambda x: x.get('date'), sensor_data_records)
+            print(sensor_data_records)
