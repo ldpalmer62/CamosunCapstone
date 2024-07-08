@@ -1,3 +1,5 @@
+import datetime
+from dateutil.relativedelta import relativedelta
 import sqlobject.main
 import json
 from Model.SensorReading import SensorReading
@@ -64,11 +66,14 @@ def get_sensor_data_list(sensor_id, time_period: str):
     """
     Gets a list of sensor data records over a period of time.
     For example, if time_period is set to day, all the records
-    that were inserted on the current day will be retrieved.
+    that were inserted on the current day will be retrieved. Set
+    time_period to all to get all the sensor reading records for
+    the sensor.
     """
-    if time_period not in ('day', 'month', 'year'):
+    if time_period not in ('day', 'month', 'year', 'all'):
         raise ValueError('time_period value must be either day, month, or year')
 
+    # If the sensor is not found, then raise a LookupError
     try:
         Sensor.get(int(sensor_id))
     except sqlobject.main.SQLObjectNotFound:
@@ -79,13 +84,21 @@ def get_sensor_data_list(sensor_id, time_period: str):
 
     match time_period:
         case 'day':
-            # sensor_data_records = filter(lambda x: x.get('date'), sensor_data_records)
-            print(sensor_data_records)
+            sensor_data_records = filter(lambda x: x.date > datetime.datetime.now() - relativedelta(days=1),
+                                         sensor_data_records)
 
         case 'month':
-            # sensor_data_records = filter(lambda x: x.get('date'), sensor_data_records)
-            print(sensor_data_records)
+            sensor_data_records = filter(lambda x: x.date > datetime.datetime.now() - relativedelta(months=1),
+                                         sensor_data_records)
 
         case 'year':
-            # sensor_data_records = filter(lambda x: x.get('date'), sensor_data_records)
-            print(sensor_data_records)
+            sensor_data_records = filter(lambda x: x.date > datetime.datetime.now() - relativedelta(years=1),
+                                         sensor_data_records)
+
+    return list(map(lambda x: {
+                            'temperature': x.temperature,
+                            'humidity': x.humidity,
+                            'pressure': x.pressure,
+                            'altitude': x.altitude,
+                            'date': x.date
+                        }, sensor_data_records))
