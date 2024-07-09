@@ -82,18 +82,15 @@ def get_sensor_data_list(sensor_id, time_period: str):
     sensor_data_records = list(SensorReading.select(SensorReading.q.sensorID == sensor_id,
                                                     orderBy=SensorReading.q.date))
 
-    match time_period:
-        case 'day':
-            sensor_data_records = filter(lambda x: x.date > datetime.datetime.now() - relativedelta(days=1),
-                                         sensor_data_records)
-
-        case 'month':
-            sensor_data_records = filter(lambda x: x.date > datetime.datetime.now() - relativedelta(months=1),
-                                         sensor_data_records)
-
-        case 'year':
-            sensor_data_records = filter(lambda x: x.date > datetime.datetime.now() - relativedelta(years=1),
-                                         sensor_data_records)
+    if time_period == 'day':
+        sensor_data_records = filter(lambda x: x.date > datetime.datetime.now() - relativedelta(days=1),
+                                     sensor_data_records)
+    elif time_period == 'month':
+        sensor_data_records = filter(lambda x: x.date > datetime.datetime.now() - relativedelta(months=1),
+                                     sensor_data_records)
+    elif time_period == 'year':
+        sensor_data_records = filter(lambda x: x.date > datetime.datetime.now() - relativedelta(years=1),
+                                     sensor_data_records)
 
     return list(map(lambda x: {
                             'temperature': x.temperature,
