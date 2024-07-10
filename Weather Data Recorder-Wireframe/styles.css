@@ -15,6 +15,7 @@ header {
   position: relative;
   display: flex; 
   align-items: center; 
+  justify-content: space-between;  /* Distribute space between logo, title, and nav */
   border-bottom: 4px solid #fff;
 }
 
@@ -27,6 +28,7 @@ header .logo {
   height: 60px;
 }
 
+
 /* Header title styling */
 header h1 {
   margin: 0;
@@ -38,12 +40,21 @@ header h1 {
 }
 
 /* Navigation menu styling */
-nav ul {
+/* nav ul {
   list-style: none;
   padding-left: 250px;
   padding-top: 20px;
   margin: 0;
   display: flex;
+}  */
+
+/* Navigation menu styling using Flexbox (for responsive)*/
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 /* Navigation menu item styling */
@@ -55,7 +66,7 @@ nav ul li {
 nav ul li a {
   color: #fff;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 25px;
   font-weight: bold;
   font-family: Arial;
 }
@@ -108,6 +119,7 @@ footer {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
+
 
 /* Temperature widget styling */
 .temperature {
@@ -197,12 +209,12 @@ button {
   cursor: pointer;
 }
 
-.temp-button {
+/* .temp-button {
   background-color: #007bff;
 }
 .temp-button:hover {
   background-color: #0056b3;
-}
+} */
 
 .prev-temp-button {
   background-color: #007bff;
@@ -211,12 +223,12 @@ button {
   background-color: #0056b3;
 }
 
-.humd-button {
+/* .humd-button {
   background-color: #FFC300;
 }
 .humd-button:hover {
   background-color: #FFFF00;
-}
+} */
 
 .prev-humd-button {
   background-color: #FFC300;
@@ -225,12 +237,12 @@ button {
   background-color: #FFFF00;
 }
 
-.pres-button {
+/* .pres-button {
   background-color: #FF4500;
 }
 .pres-button:hover {
   background-color: #FF5237;
-}
+} */
 
 .prev-pres-button {
   background-color: #FF4500;
@@ -239,12 +251,12 @@ button {
   background-color: #FF5237;
 }
 
-.alt-button {
+/* .alt-button {
   background-color: #228B22;
 }
 .alt-button:hover {
   background-color: #3CB371;
-}
+} */
 
 .prev-alt-button {
   background-color: #228B22;
@@ -253,7 +265,45 @@ button {
   background-color: #3CB371;
 }
 
-/* Table styling */
+
+/* Media queries for smaller screens */
+@media (max-width: 768px) {
+  header h1 {
+      font-size: 20px;
+  }
+
+  nav ul li a {
+      font-size: 14px;
+  }
+
+  .widget {
+      width: 100%;
+  }
+
+  footer {
+      font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+      font-size: 18px;
+  }
+
+  nav ul {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .widget {
+      width: 100%;
+  }
+}
+
+
+
+
+/* Table styling
 table {
   width: 100%;
   border-collapse: collapse;
@@ -282,4 +332,4 @@ tbody tr:nth-child(even) {
 
 tbody tr:hover {
   background-color: #ddd;
-}
+} */
