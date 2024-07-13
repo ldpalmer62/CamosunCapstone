@@ -1,96 +1,72 @@
-//document.addEventListener("DOMContentLoaded", function() {
-//  // Retrieve previous temperature records from localStorage or initialize an empty array
-//  let previousTemperatures = JSON.parse(localStorage.getItem("previousTemperatures")) || [];
-//  let tableBody = document.getElementById("temperature-table-body");
-//
-//  // Iterate through each record and create table rows
-//  previousTemperatures.forEach(function(record) {
-//    let row = document.createElement("tr");
-//    let timeCell = document.createElement("td");
-//    let tempCell = document.createElement("td");
-//
-//    // Display time and pressure in the table cells
-//    timeCell.textContent = record.time;
-//    tempCell.textContent = record.temperature + " °C";
-//
-//    // Append cells to the row and row to the table body
-//    row.appendChild(timeCell);
-//    row.appendChild(tempCell);
-//    tableBody.appendChild(row);
-//  });
-//});
-
-
-
-
-
-const fetchHistoricalData = async (sensorID, month, year) => {
-  // Read from local storage
+var ProcessedData;
+const FetchData = async sensorID =>{
   try {
-      const data = localStorage.getItem('latest_sensor_data');
-      if (data) {
-          return JSON.parse(data);
-      }
-  } catch (error) {
-      console.error('Error fetching historical data:', error);
-      return null;
+    const BASE_URL = "http://205.250.221.237:8080";
+    const response = await fetch(`${BASE_URL}/get_sensor_data_list?id=${sensorID}&&time_period=all`);
+    const data = await response.json();
+    return data.sensor_data;
+  }catch (error) {
+    console.error('Error fetching historical data:', error);
+    return null;
   }
-};
+}
+
+const ProcessData = data => {
+  let ProcessedData = {
+    dataLow: [],
+    dataAvg: [],
+    dataHigh:[]
+  }
+  var low;
+  var avg;
+  var numPoints;
+  var high;
+  var previous = data[0];
+
+  data.forEach(dataPoint => {
+    if((new Date(dataPoint.date)).getDate() != (new Date(previous.date)).getDate()){
+      let day = new Date(previous.date);
+      ProcessedData.dataLow.push({x: day, y: low});
+      ProcessedData.dataAvg.push({x: day, y: avg/numPoints});
+      ProcessedData.dataHigh.push({x: day, y: high});
+
+      low = null;
+      avg = 0;
+      numPoints = 0;
+      high = null;
+    }
+    
+    if(low == null || dataPoint.temperature < low )
+      low = dataPoint.temperature;
+
+    if(high == null || dataPoint.temperature > high )
+      high = dataPoint.temperature;
+
+    avg += dataPoint.temperature;
+    numPoints++;
+    previous = dataPoint;
+  });
+  let day = new Date(previous.date);
+  ProcessedData.dataLow.push({x: day, y: low});
+  ProcessedData.dataAvg.push({x: day, y: avg/numPoints});
+  ProcessedData.dataHigh.push({x: day, y: high});
+  return ProcessedData;
+}
 
 
-
-// const LoadGraph = async (sensorID, month, year) => {
-//   const data = await fetchHistoricalData(sensorID, month, year);
-//   if (!data) {
-//       console.error('No data available');
-//       return;
-//   }
-
-//   const dataLow = [];
-//   const dataHigh = [];
-//   const dataAvg = [];
-  
-
-//   // Assuming we only have one data point for the latest data
-//   const date = new Date(data.timestamp);
-//   dataHigh.push({ x: date, y: data.temperature });
-//   dataLow.push({ x: date, y: data.temperature });
-//   dataAvg.push({ x: date, y: data.temperature });
-
-  
-// };
-
-
-const LoadGraph = async (month, year) => {
+const LoadGraph = async (month, year, data) => {
   var dataLow = [];
   var dataHigh = [];
   var dataAvg = [];
-  for(let i = 1; i <= 30; i++){
-    let ranHigh = Math.random();
-    let ranLow = ranHigh * Math.random();
-    let ranAvg = (ranLow + ranHigh)/2;
-    dataHigh.push({ x: new Date(year, MonthToNumber(month)-1, i), y: (ranHigh * (26.0 - 19.0)) + 19.0 });
-    dataLow.push( { x: new Date(year, MonthToNumber(month)-1, i), y: (ranLow *  (26.0 - 19.0)) + 19.0 });
-    dataAvg.push( { x: new Date(year, MonthToNumber(month)-1, i), y: (ranAvg *  (26.0 - 19.0)) + 19.0 });
+
+  for(let i = 0; i < data.dataLow.length; i++){
+    if((new Date(data.dataLow[i].x)).getUTCMonth() == MonthToNumber(month) - 1 && (new Date(data.dataLow[i].x)).getUTCFullYear() == year){
+      dataLow.push(data.dataLow[i]);
+      dataHigh.push(data.dataHigh[i]);
+      dataAvg.push(data.dataAvg[i]);
+    }
   }
 
-
-  // const data = await fetchHistoricalData(sensorID, month, year);
-  // if (!data) {
-  //     console.error('No data available');
-  //     return;
-  // }
-
-  // const dataLow = [];
-  // const dataHigh = [];
-  // const dataAvg = [];
-  
-
-  // // Assuming we only have one data point for the latest data
-  // const date = new Date(data.timestamp);
-  // dataHigh.push({ x: date, y: data.temperature });
-  // dataLow.push({ x: date, y: data.temperature });
-  // dataAvg.push({ x: date, y: data.temperature });
 
 
   CanvasJS.addColorSet(
@@ -176,22 +152,15 @@ const MonthToNumber = month => {
 
 //When page loads, load a default graph
 document.addEventListener("DOMContentLoaded", async() => {
-  LoadGraph(document.getElementById("month").value, document.getElementById("year").value);
+  var data = await FetchData(2);
+  ProcessedData = ProcessData(data);
+  LoadGraph(document.getElementById("month").value, document.getElementById("year").value, ProcessedData);
 });
 
 //When user selects month and year, update the graph to reflect it
 document.getElementById("month").onchange = () => {
-  LoadGraph(document.getElementById("month").value, document.getElementById("year").value);
+  LoadGraph(document.getElementById("month").value, document.getElementById("year").value, ProcessedData);
 }
 document.getElementById("year").onchange = () => {
-  LoadGraph(document.getElementById("month").value, document.getElementById("year").value);
+  LoadGraph(document.getElementById("month").value, document.getElementById("year").value, ProcessedData);
 }
-
-
-
-
-
-
-
-
-
