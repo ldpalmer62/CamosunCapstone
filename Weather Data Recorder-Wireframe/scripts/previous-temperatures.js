@@ -26,6 +26,7 @@ const ProcessData = data => {
   data.forEach(dataPoint => {
     if((new Date(dataPoint.date)).getDate() != (new Date(previous.date)).getDate()){
       let day = new Date(previous.date);
+      day.setHours(0, 0, 0, 0);
       ProcessedData.dataLow.push({x: day, y: low});
       ProcessedData.dataAvg.push({x: day, y: avg/numPoints});
       ProcessedData.dataHigh.push({x: day, y: high});
