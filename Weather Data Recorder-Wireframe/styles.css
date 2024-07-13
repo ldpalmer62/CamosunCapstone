@@ -100,7 +100,8 @@ footer {
 /* Dashboard content styling */
 .dashboard-content {
   display: flex;
-  flex-wrap: wrap;
+  /*flex-wrap: wrap;*/
+  width: 66%;
   justify-content: space-around;
   background-color: #fff;
   border-radius: 10px;
@@ -109,8 +110,8 @@ footer {
 
 /* Widget styling */
 .widget {
-  width: 45%;
-  height: 200px;
+  width: 33%;
+  height: 250px;
   margin: 10px;
   display: grid;
   justify-content: center;
