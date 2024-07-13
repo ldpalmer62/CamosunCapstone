@@ -7,6 +7,8 @@
         <title>Previous Pressures</title>
         <!-- Link to external CSS stylesheet -->
         <link rel="stylesheet" href="styles.css">
+
+        <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
     </head>
     <body>
         <!-- Header section containing logo, title, and navigation menu -->
@@ -22,23 +24,39 @@
             </nav>
         </header>
 
+        
+
         <!-- Main content section -->
         <main>
-            <!-- Table to display time and temperature records -->
-            <table>
-                <!-- Table header defining column names -->
-                <thead>
-                    <tr>
-                        <th>Time</th>
-                        <th>Pressure (hPa)</th>
-                    </tr>
-                </thead>
+            <div style="width: 100%;">
+                <div style="padding: 10px; display: block; background-color: #ddddFF;">
+                    <label for="year">Choose a year:</label>
+                    <select name="year" id="year">
+                        <option value="2024">2024</option>
+                    </select>
+                    <label for="month">Choose a month:</label>
+                    <select name="month" id="month">
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                    </select>
+                </div>
+                <div id="chartContainer" style="height: 300px; width: 100%; display: block;"></div>
+                <!-- Table to display time and pressure records -->
+                <table style="display: none;">
+                    <!-- Table header defining column names -->
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Pressure (Hpa)</th>
+                        </tr>
+                    </thead>
 
-                <!-- Table body where rows will be dynamically added by JavaScript -->
-                <tbody id="pressure-table-body">
-                    <!-- Rows will be added dynamically here -->
-                </tbody>
-            </table>
+                    <!-- Table body where rows will be dynamically added by JavaScript -->
+                    <tbody id="pressure-table-body">
+                        <!-- Rows will be added dynamically here -->
+                    </tbody>
+                </table>
+            </div>
         </main>
 
         <!-- Footer section -->
