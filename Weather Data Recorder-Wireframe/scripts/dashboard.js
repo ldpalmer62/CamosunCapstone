@@ -178,7 +178,6 @@ const LoadData = async (sensorID) => {
             document.getElementById('temp-value').innerText = data.temperature + ' °C';
             document.getElementById('humd-value').innerText = data.humidity + ' %';
             document.getElementById('pres-value').innerText = data.pressure + ' hPa';
-            document.getElementById('alt-value').innerText = data.altitude + ' m';
             
             // Store the fetched data in local storage
             const timestamp = new Date().toISOString();
