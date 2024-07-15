@@ -127,7 +127,7 @@ footer {
   background: #00bfff;
 }
 .temperature .temp-description {
-  font-size: 24px;  
+  font-size: 30px;  
   font-weight: bold;
   margin: 0;
 }
@@ -142,7 +142,7 @@ footer {
   background: #ffdf00;
 }
 .humidity .humd-description {
-  font-size: 24px;  
+  font-size: 30px;  
   font-weight: bold;
   margin: 0;
 }
@@ -157,7 +157,7 @@ footer {
   background: #ff6347;
 }
 .pressure .pres-description {
-  font-size: 24px;  
+  font-size: 30px;  
   font-weight: bold;
   margin: 0;
 }
@@ -167,22 +167,6 @@ footer {
   margin: 0;
 }
 
-/* Altitude widget styling */
-.altitude {
-  background: #32cd32;
-  font-size: 24px;  
-  font-weight: bold;
-}
-.altitude .alt-description {
-  font-size: 24px;  
-  font-weight: bold;
-  margin: 0;
-}
-.altitude .alt-value {
-  font-size: 36px;
-  font-weight: bold;
-  margin: 0;
-}
 
 /* About content styling */
 .about-content {
@@ -192,6 +176,13 @@ footer {
   background: rgba(0, 0, 0, 0.5);
   padding: 20px;
   border-radius: 10px;
+  text-align: left;
+}
+
+h2 {
+  text-align: center;
+  font-size: 30px;  
+  font-weight: bold;
 }
 
 /* Button container styling */
@@ -208,6 +199,8 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 /* .temp-button {
