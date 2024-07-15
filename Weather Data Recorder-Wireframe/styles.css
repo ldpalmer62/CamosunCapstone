@@ -171,8 +171,8 @@ footer {
 }
 
 
-/* Home and About content styling */
-.homepage-content, .about-content {
+/* Home, About and Config content styling */
+.homepage-content, .about-content, .config-content {
   justify-content: center;
   align-items: center;
   color: #fff;
@@ -206,26 +206,12 @@ button {
   font-weight: bold;
 }
 
-/* .temp-button {
-  background-color: #007bff;
-}
-.temp-button:hover {
-  background-color: #0056b3;
-} */
-
 .prev-temp-button {
   background-color: #007bff;
 }
 .prev-temp-button:hover {
   background-color: #0056b3;
 }
-
-/* .humd-button {
-  background-color: #FFC300;
-}
-.humd-button:hover {
-  background-color: #FFFF00;
-} */
 
 .prev-humd-button {
   background-color: #FFC300;
@@ -234,13 +220,6 @@ button {
   background-color: #FFFF00;
 }
 
-/* .pres-button {
-  background-color: #FF4500;
-}
-.pres-button:hover {
-  background-color: #FF5237;
-} */
-
 .prev-pres-button {
   background-color: #FF4500;
 }
@@ -248,18 +227,20 @@ button {
   background-color: #FF5237;
 }
 
-/* .alt-button {
-  background-color: #228B22;
-}
-.alt-button:hover {
-  background-color: #3CB371;
-} */
 
-.prev-alt-button {
-  background-color: #228B22;
+/* Config Button Styles */
+#add-sensor-button, #add-data-button {
+  background-color: #4CAF50;
 }
-.prev-alt-button:hover {
-  background-color: #3CB371;
+#add-sensor-button:hover, #add-data-button:hover  {
+  background-color: #45a049;
+}
+
+#delete-data-button {
+  background-color: #f44336;
+}
+#delete-data-button:hover {
+  background-color: #da190b;
 }
 
 

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Meta information for character encoding and responsive design -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Config - Raspberry Pi Weather Monitor</title>
+        <!-- Link to external CSS stylesheet -->
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        <!-- Header section containing logo, title, and navigation menu -->
+        <header>
+            <img src="sources/raspberry-pi-logo.png" alt="Raspberry Pi Logo" class="logo">
+            <h1>Weather Monitoring System</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="configurations.html">Configurations</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main content section -->
+        <main>
+            <section class="config-content">
+                <h2>Sensor Configurations</h2>
+                <h3>Manage your sensors below:</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sensor ID</th>
+                            <th>Sensor Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sensor-table-body">
+                        
+                    </tbody>
+                </table>
+                <button id="add-sensor-button" onclick="addSensor()">Add New Sensor</button>
+
+                <h2>Data Management</h2>
+                <form id="add-data-form">
+                    <label for="data-date">Date:</label>
+                    <input type="date" id="data-date" name="data-date">
+                    <label for="data-value">Data:</label>
+                    <input type="text" id="data-value" name="data-value">
+                    <button id="add-data-button" type="button" onclick="addData()">Add</button>
+                </form>
+                <form id="delete-data-form">
+                    <label for="delete-date">Date:</label>
+                    <input type="date" id="delete-date" name="delete-date">
+                    <button id="delete-data-button" type="button" onclick="deleteData()">Delete</button>
+                </form>
+            </section>
+        </main>
+        
+        <!-- Footer section -->
+        <footer>
+            <p>Copyright &copy; 2024 - Victoria PiMakers</p>
+        </footer>
+    </body>
+</html>
