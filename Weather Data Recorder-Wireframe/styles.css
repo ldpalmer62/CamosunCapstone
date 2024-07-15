@@ -97,6 +97,9 @@ footer {
   border-top: 4px solid #fff;
 }
 
+
+
+
 /* Dashboard content styling */
 .dashboard-content {
   display: flex;
@@ -168,8 +171,8 @@ footer {
 }
 
 
-/* About content styling */
-.about-content {
+/* Home and About content styling */
+.homepage-content, .about-content {
   justify-content: center;
   align-items: center;
   color: #fff;
