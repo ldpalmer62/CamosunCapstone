@@ -206,13 +206,15 @@ button {
   font-weight: bold;
 }
 
-.prev-temp-button {
+/* temperature history and unit buttons styling */
+.prev-temp-button, #toggle-temp-unit {
   background-color: #007bff;
 }
-.prev-temp-button:hover {
+.prev-temp-button:hover, #toggle-temp-unit:hover {
   background-color: #0056b3;
 }
 
+/* humidity history button styling */
 .prev-humd-button {
   background-color: #FFC300;
 }
@@ -220,6 +222,7 @@ button {
   background-color: #FFFF00;
 }
 
+/* pressure history button styling */
 .prev-pres-button {
   background-color: #FF4500;
 }

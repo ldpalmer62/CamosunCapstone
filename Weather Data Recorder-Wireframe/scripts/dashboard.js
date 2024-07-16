@@ -27,7 +27,7 @@
 // let previousHumidities = [];
 
 // document.getElementById("humd-button").addEventListener("click", function() {
-  
+
 //   let newHumidities = Math.floor(Math.random() * 71) + 20;
 //   document.getElementById("humd-value").innerText = newHumidities + " %";
 //   let timestamp = new Date().toLocaleString();
@@ -45,7 +45,7 @@
 // let previousPressures = [];
 
 // document.getElementById("pres-button").addEventListener("click", function() {
-  
+
 //   let newPressures = Math.floor(Math.random() * 50) + 950; ;
 //   document.getElementById("pres-value").innerText = newPressures + " hPa";
 //   let timestamp = new Date().toLocaleString();
@@ -64,7 +64,7 @@
 // let previousAltitudes= [];
 
 // document.getElementById("alt-button").addEventListener("click", function() {
-  
+
 //   // Define minimum and maximum altitude values
 //   var minAltitude = 0; 
 //   var maxAltitude = 10000; 
@@ -175,7 +175,8 @@ const LoadData = async (sensorID) => {
         }
         const data = await response.json();
         if (data.temperature !== undefined) {
-            document.getElementById('temp-value').innerText = data.temperature + ' °C';
+            temperatureInCelsius = data.temperature; // Store the current temperature
+            document.getElementById('temp-value').innerText = temperatureInCelsius+ ' °C';
             document.getElementById('humd-value').innerText = data.humidity + ' %';
             document.getElementById('pres-value').innerText = data.pressure + ' hPa';
             
@@ -190,10 +191,34 @@ const LoadData = async (sensorID) => {
     }
 }
 
-/// Runs needed functions when page is loaded
+
+// Store temperature in Celsius
+let temperatureInCelsius = null;
+// For tracking of the current temperature unit
+let currentTempUnit = 'C';
+
+// Toggle the temperature unit
+const toggleTemperatureUnit = () => {
+    if (temperatureInCelsius !== null) {
+        if (currentTempUnit === 'C') {
+            const tempInFahrenheit = (temperatureInCelsius * 9/5) + 32;
+            document.getElementById('temp-value').innerText = tempInFahrenheit.toFixed(2) + ' °F';
+            currentTempUnit = 'F';
+        } else {
+            document.getElementById('temp-value').innerText = temperatureInCelsius + ' °C';
+            currentTempUnit = 'C';
+        }
+    }
+}
+
+// Runs needed functions when page is loaded
 document.addEventListener("DOMContentLoaded", async () => {
     LoadData(2);
+    document.getElementById('toggle-temp-unit').addEventListener('click', toggleTemperatureUnit);
 });
+
+
+
 
 
 
