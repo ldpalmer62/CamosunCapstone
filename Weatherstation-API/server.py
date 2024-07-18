@@ -6,6 +6,7 @@ from Controller.sensor_controller import *
 from Controller.get_current_local_time import get_current_local_time
 from Model.create_tables import create_tables
 from sqlobject.dberrors import DuplicateEntryError
+from sqlobject.main import SQLObjectNotFound
 from flask_cors import CORS
 
 # Create a connection to the SQLite database
@@ -104,3 +105,12 @@ def get_all_sensors_route():
     return {
         'sensors': get_all_sensors()
     }, 200
+
+
+@app.delete("/delete_sensor/<sensor_id>")
+def delete_sensor_route(sensor_id):
+    try:
+        delete_sensor(sensor_id)
+        return {}, 200
+    except SQLObjectNotFound:
+        return {}, 404

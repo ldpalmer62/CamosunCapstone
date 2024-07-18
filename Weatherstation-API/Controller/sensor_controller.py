@@ -1,4 +1,5 @@
 from Model.Sensor import Sensor
+from Model.SensorReading import SensorReading
 import datetime
 
 
@@ -25,3 +26,8 @@ def get_all_sensors():
         'name': x.name,
         'last_active': x.last_active
     }, Sensor.select()))
+
+
+def delete_sensor(sensor_id):
+    SensorReading.deleteMany(SensorReading.q.sensorID == sensor_id)  # Delete all SensorReadings that are related to it
+    Sensor.delete(sensor_id)  # Delete the actual Sensor
