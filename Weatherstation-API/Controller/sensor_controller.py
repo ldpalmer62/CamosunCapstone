@@ -17,3 +17,11 @@ def register_sensor(sensor_device_values: dict) -> str:
 
     # Return the id of the sensor we just created
     return str(new_sensor.id)
+
+
+def get_all_sensors():
+    return list(map(lambda x: {
+        'id': x.id,
+        'name': x.name,
+        'last_active': x.last_active
+    }, Sensor.select()))

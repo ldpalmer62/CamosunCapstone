@@ -22,6 +22,7 @@ def add_sensor_reading(sensor_data: dict) -> None:
 
     # Get the sensor that has the corresponding id
     sensor = Sensor.get(id=sensor_data.get("sensor_id"))
+    sensor.set(last_active=datetime.datetime.now())
 
     # If the sensor is not found, then raise a LookupError
     if not sensor:

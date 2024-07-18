@@ -1,8 +1,8 @@
 from flask import Flask, request, jsonify, make_response
 from sqlobject import connectionForURI, sqlhub
 import constants
-from Controller.sensor_data_controller import add_sensor_reading, get_latest_sensor_data, get_sensor_data_list
-from Controller.sensor_controller import register_sensor
+from Controller.sensor_data_controller import *
+from Controller.sensor_controller import *
 from Controller.get_current_local_time import get_current_local_time
 from Model.create_tables import create_tables
 from sqlobject.dberrors import DuplicateEntryError
@@ -97,3 +97,10 @@ def get_sensor_data_list_route():
         return {
             'error': 'No sensor with the corresponding id is registered'
         }, 403
+
+
+@app.get("/get_all_sensors")
+def get_all_sensors_route():
+    return {
+        'sensors': get_all_sensors()
+    }, 200
