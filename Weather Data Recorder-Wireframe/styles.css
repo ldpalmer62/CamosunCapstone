@@ -214,6 +214,43 @@ button {
   background-color: #0056b3;
 }
 
+
+/* Filter container styling in temp history*/
+.filter-container {
+  padding: 10px; 
+  display: block; 
+  background-color: #ddddFF;
+}
+
+/* Label and select styling within filter container */
+.filter-container label, .filter-container select {
+  margin: 0 5px;
+}
+
+/* the toggle unit button styling */
+#unitToggle {
+  background: linear-gradient(135deg, #3a7bd5 0%, #3a6073 100%);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: right;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 30px; 
+  box-shadow: 0 4px rgba(0, 0, 0, 0.1); 
+  transition: all 0.3s ease; 
+}
+
+#unitToggle:hover {
+  background: linear-gradient(135deg, #2c6aa8 0%, #2c4f60 100%);
+  box-shadow: 0 6px rgba(0, 0, 0, 0.15); 
+  transform: translateY(-2px); 
+}
+
+
+
 /* humidity history button styling */
 .prev-humd-button {
   background-color: #FFC300;

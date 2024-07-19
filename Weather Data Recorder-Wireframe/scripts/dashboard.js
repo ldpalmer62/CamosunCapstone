@@ -180,9 +180,6 @@ const LoadData = async (sensorID) => {
             document.getElementById('humd-value').innerText = data.humidity + ' %';
             document.getElementById('pres-value').innerText = data.pressure + ' hPa';
             
-            // Store the fetched data in local storage
-            const timestamp = new Date().toISOString();
-            localStorage.setItem('latest_sensor_data', JSON.stringify({ ...data, timestamp }));
         } else {
             console.error('No data received');
         }

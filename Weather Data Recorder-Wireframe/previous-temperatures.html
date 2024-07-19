@@ -30,7 +30,7 @@
         <!-- Main content section -->
         <main>
             <div style="width: 100%;">
-                <div style="padding: 10px; display: block; background-color: #ddddFF;">
+                <div class="filter-container">
                     <label for="year">Choose a year:</label>
                     <select name="year" id="year">
                         <option value="2024">2024</option>
@@ -40,6 +40,8 @@
                         <option value="June">June</option>
                         <option value="July">July</option>
                     </select>
+                    <!-- Unit toggle button -->
+                    <button id="unitToggle">Toggle Unit</button>
                 </div>
                 <div id="chartContainer" style="height: 300px; width: 100%; display: block;"></div>
             </div>

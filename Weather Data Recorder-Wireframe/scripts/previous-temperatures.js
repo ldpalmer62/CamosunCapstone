@@ -1,5 +1,8 @@
-var ProcessedData;//declared here to keep public
+var ProcessedData;//Declared here to keep public
 const BASE_URL = "http://205.250.221.237:8080";
+
+// For tracking current unit(default C)
+var currentUnit = "C";
 
 //Fetches all data of a sensor from the database
 //Params: sensorID
@@ -68,6 +71,17 @@ const ProcessData = data => {
   return ProcessedData;
 }
 
+// Convert temperature from C to F
+const convertToUnit = (value, unit) => {
+  return unit === "F" ? (value * 9/5) + 32 : (value - 32) * 5/9;
+};
+
+// Convert all data points to the selected unit
+const convertDataPoints = (data, unit) => {
+  return data.map(point => ({ x: point.x, y: convertToUnit(point.y, unit) }));
+};
+
+
 //Loads the graph for the user
 //Params: Month: String, Year: int, data: processedData
 const LoadGraph = async (month, year, data) => {
@@ -84,6 +98,12 @@ const LoadGraph = async (month, year, data) => {
     }
   }
 
+  // Convert data points if the current unit is F
+  if (currentUnit === "F") {
+    dataLow = convertDataPoints(dataLow, currentUnit);
+    dataHigh = convertDataPoints(dataHigh, currentUnit);
+    dataAvg = convertDataPoints(dataAvg, currentUnit);
+  }
 
   //Color theme
   CanvasJS.addColorSet(
@@ -183,3 +203,10 @@ document.getElementById("month").onchange = () => {
 document.getElementById("year").onchange = () => {
   LoadGraph(document.getElementById("month").value, document.getElementById("year").value, ProcessedData);
 }
+
+// Toggle between C and F
+const toggleUnit = () => {
+  currentUnit = currentUnit === "C" ? "F" : "C";
+  LoadGraph(document.getElementById("month").value, document.getElementById("year").value, ProcessedData);
+};
+document.getElementById("unitToggle").addEventListener("click", toggleUnit);
