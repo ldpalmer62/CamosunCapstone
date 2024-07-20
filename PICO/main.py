@@ -42,10 +42,10 @@ url = Settings.URL
 
 
 #Set min and maximum boundary values for Temp and Humidity
-MAX_TEMP = 30.0
-MIN_TEMP = 10.0
-MAX_HUMID = 50.0
-MIN_HUMID = 0.0
+MAX_TEMP = Settings.MAX_TEMP
+MIN_TEMP = Settings.MIN_TEMP
+MAX_HUMID = Settings.MAX_HUMID
+MIN_HUMID = Settings.MIN_HUMID
 
 #Get the current Date in the format YYYY MM DD
 def GetDate():
@@ -218,3 +218,4 @@ while True:
             #If no information is needed to post, wait until next 10 min increment
             print("No information needed to post")
             WaitUntilNextTenMins()
+
