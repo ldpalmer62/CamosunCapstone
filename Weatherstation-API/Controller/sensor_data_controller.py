@@ -35,7 +35,7 @@ def add_sensor_reading(sensor_data: dict) -> None:
     sensor_data.pop('sensor_id')
 
     # Create an instance of SensorReading, and supply the sensor_data dict to it as kwargs
-    # Creating this object will automatically add it into the database
+    # Creating this object will automatically add it to the database
     SensorReading(sensor=sensor, **sensor_data)
 
 
