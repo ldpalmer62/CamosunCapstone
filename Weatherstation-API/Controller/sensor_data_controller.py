@@ -22,11 +22,13 @@ def add_sensor_reading(sensor_data: dict) -> None:
 
     # Get the sensor that has the corresponding id
     sensor = Sensor.get(id=sensor_data.get("sensor_id"))
-    sensor.set(last_active=datetime.datetime.now())
 
     # If the sensor is not found, then raise a LookupError
     if not sensor:
         raise LookupError
+
+    # Update the last_active value to the current time
+    sensor.set(last_active=datetime.datetime.now())
 
     # Remove the sensor_id key from the sensor_data dict. This is so
     # we can pass it as kwargs, since SQLObject won't allow any keys that aren't a part of the entity
