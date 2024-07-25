@@ -13,8 +13,10 @@
         <!-- Header section containing logo, title, and navigation menu -->
         <header>
             <img src="sources/raspberry-pi-logo.png" alt="Raspberry Pi Logo" class="logo">
-            <h1>Weather Monitoring System</h1>
-            <nav>
+            <h1>Weather Monitor System</h1>
+            <input type="checkbox" id="menu-toggle">
+            <label for="menu-toggle" class="menu-icon">&#9776;</label>
+            <nav id="navbar">
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="dashboard.html">Dashboard</a></li>
@@ -35,8 +37,12 @@
         
         <!-- Footer section -->
         <footer>
-            <p>Copyright &copy; 2024 - Victoria PiMakers</p>
-        </footer>
-        
+            <p>Copyright &copy; 2024 - VicPiMakers, Victoria, BC</p>
+        </footer>        
+
+        <!-- Link to external JavaScript file -->
+        <script src="scripts/menuToggle.js"></script>
+        <!-- JavaScript -->
+
     </body>
 </html>
