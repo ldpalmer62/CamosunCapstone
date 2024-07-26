@@ -102,3 +102,14 @@ def get_sensor_data_list(sensor_id, time_period: str):
                             'altitude': x.altitude,
                             'date': x.date
                         }, sensor_data_records))
+
+
+def delete_sensor_readings_by_datetime(**kwargs):
+    if not kwargs.get('datetime'):
+        raise ValueError('date must be supplied')
+
+    try:
+        date_time = datetime.datetime.strptime(kwargs.get('datetime'), '%m%d%y %H:%M:%S')
+    except (ValueError, TypeError) as e:
+        raise ValueError('datetime format is invalid')
+
