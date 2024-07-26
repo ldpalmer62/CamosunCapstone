@@ -100,17 +100,26 @@ def get_sensor_data_list_route():
         }, 403
 
 
-@app.get("/get_all_sensors")
+@app.get('/get_all_sensors')
 def get_all_sensors_route():
     return {
         'sensors': get_all_sensors()
     }, 200
 
 
-@app.delete("/delete_sensor/<sensor_id>")
+@app.delete('/delete_sensor/<sensor_id>')
 def delete_sensor_route(sensor_id):
     try:
         delete_sensor(sensor_id)
-        return {}, 200
+        return {}, 204
     except SQLObjectNotFound:
         return {}, 404
+
+
+@app.delete('/delete_sensor_readings_by_date/<date>')
+def delete_sensor_readings_by_date_route(date):
+    try:
+        delete_sensor_readings_by_date(date=date)
+        return {}, 204
+    except (ValueError, TypeError) as e:
+        return str(e), 400

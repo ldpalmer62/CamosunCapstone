@@ -1,4 +1,6 @@
 import datetime
+import time
+
 from dateutil.relativedelta import relativedelta
 import sqlobject.main
 import json
@@ -33,6 +35,10 @@ def add_sensor_reading(sensor_data: dict) -> None:
     # Remove the sensor_id key from the sensor_data dict. This is so
     # we can pass it as kwargs, since SQLObject won't allow any keys that aren't a part of the entity
     sensor_data.pop('sensor_id')
+
+    # If a custom date was supplied, then replace the date str with a datetime obj created from the string
+    if sensor_data.get('date'):
+        sensor_data['date'] = datetime.datetime.strptime(sensor_data.get('date'), '%m-%d-%Y %H:%M:%S')
 
     # Create an instance of SensorReading, and supply the sensor_data dict to it as kwargs
     # Creating this object will automatically add it to the database
@@ -109,7 +115,12 @@ def delete_sensor_readings_by_date(**kwargs):
         raise ValueError('date must be supplied')
 
     try:
-        date = datetime.datetime.strptime(kwargs.get('date'), '%m%d%y')
+        # These two variables are to filter the records all on the same day of the specified date
+        date_filter_min = datetime.datetime.strptime(f'{kwargs.get("date")} 00:00:01', '%m-%d-%Y %H:%M:%S')
+        date_filter_max = datetime.datetime.strptime(f'{kwargs.get("date")} 23:59:59', '%m-%d-%Y %H:%M:%S')
     except (ValueError, TypeError) as e:
-        raise ValueError('datetime format is invalid')
+        print(e)
+        raise ValueError('date format is invalid')
 
+    for x in filter(lambda x: date_filter_min <= x.date <= date_filter_max, SensorReading.select()):
+        SensorReading.delete(x.id)
