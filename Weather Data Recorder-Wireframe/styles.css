@@ -5,6 +5,7 @@ body {
   font-family: Arial;
   background: #f0f0f0;
   color: #333;
+  overflow-y: auto;
 }
 
 /* Header styling */
@@ -54,8 +55,7 @@ nav ul {
   margin: 0;
   padding-top: 20px;
   display: flex;
-  flex-wrap: wrap;
-  
+  flex-wrap: wrap; 
 }
 
 /* Navigation menu item styling */
@@ -95,6 +95,8 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-y: auto;
+  box-sizing: border-box; /* Include padding in height calculation */
 }
 
 /* Footer styling */
@@ -105,10 +107,8 @@ footer {
   padding: 10px 0;
   font-size: 20px;
   font-family: Arial;
-  position: fixed;
-  width: 100%;
-  bottom: 0;
   border-top: 4px solid #fff;
+  margin-top: auto;
 }
 
 
@@ -194,6 +194,15 @@ footer {
   text-align: left;
 }
 
+.homepage-content p {
+  text-align: center;
+}
+
+#linkfont {
+  font-weight: bold;
+  font-size: 20px;
+}
+
 h2 {
   text-align: center;
   font-size: 30px;  
@@ -245,8 +254,6 @@ button {
   border: none;
   color: white;
   padding: 10px 20px;
-  text-align: right;
-  text-decoration: none;
   display: inline-block;
   font-size: 16px;
   cursor: pointer;
@@ -297,31 +304,34 @@ button {
 
 
 /* Media queries for smaller screens */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   header h1 {
-    font-size: 8vw; /* Adjust font size for tablets */
+    font-size: 24px; 
   }
 
   header .logo {
     width: 80px;
     height: 48px;
   }
-  
+
   nav ul {
     display: none;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-end; /* Align items to the right */
     background: #12253E;
     width: 100%;
     position: absolute;
-    top: 60px;
-    left: 0;
+    top: 45px;
+    right: 0; /* Align the dropdown menu to the right */
+    z-index: 1000; /* Ensure the dropdown menu is above other elements */
+    box-sizing: border-box; /* Include padding in width calculation */
   }
 
   nav ul li {
-    width: 100%;
-    text-align: center;
-    padding: 10px 0;
+    width: auto; /* Adjust width to fit content */
+    text-align: right;
+    padding: 10px 20px;
+    box-sizing: border-box; /* Include padding in width calculation */
   }
 
   #menu-toggle:checked + .menu-icon + nav ul {
@@ -330,6 +340,38 @@ button {
 
   .menu-icon {
     display: block;
+    font-size: 30px;
+    padding-left: 550px;
+    z-index: 1001; /* Ensure the menu icon is above other elements */
+  }
+}
+
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 25px; 
+  }
+
+  header .logo {
+    width: 80px;
+    height: 48px;
+  }
+
+  nav ul li {
+    width: auto; /* Adjust width to fit content */
+    text-align: right;
+    padding: 10px 20px;
+    box-sizing: border-box; /* Include padding in width calculation */
+  }
+
+  #menu-toggle:checked + .menu-icon + nav ul {
+    display: flex;
+  }
+
+  .menu-icon {
+    display: block;
+    font-size: 25px;
+    padding-left: 300px;
+    z-index: 1001; /* Ensure the menu icon is above other elements */
   }
 
   .widget {
@@ -350,6 +392,7 @@ button {
 @media (max-width: 480px) {
   header h1 {
     font-size: 18px;
+    padding-left: 80px;
   }
 
   header .logo {
@@ -359,10 +402,24 @@ button {
 
   nav ul {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-end; /* Align items to the right */
+    z-index: 1000; /* Ensure the dropdown menu is above other elements */
+    box-sizing: border-box; /* Include padding in width calculation */
   }
 
+  nav ul li {
+    width: auto; /* Adjust width to fit content */
+    text-align: right;
+    padding: 10px 20px;
+    box-sizing: border-box; /* Include padding in width calculation */
+  }
+
+  .menu-icon {
+    padding-left: 50px;
+    z-index: 1001; /* Ensure the menu icon is above other elements */
+  }
 }
+
 
 
 
