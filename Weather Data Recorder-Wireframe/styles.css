@@ -1,8 +1,7 @@
-/* CSS */
 /* General body styling */
 body {
   margin: 0;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   background: #f0f0f0;
   color: #333;
   overflow-y: auto;
@@ -16,7 +15,7 @@ header {
   position: relative;
   display: flex; 
   align-items: center; 
-  justify-content: space-between;  /* Distribute space between logo, title, and nav */
+  justify-content: space-between; /* Distribute space between logo, title, and nav */
   border-bottom: 4px solid #fff;
 }
 
@@ -29,25 +28,14 @@ header .logo {
   height: 60px;
 }
 
-
 /* Header title styling */
 header h1 {
   margin: 0;
   font-size: 30px;
   font-weight: bold;
-  font-family: Arial;
   padding-top: 10px;
   padding-left: 130px;
 }
-
-/* Navigation menu styling */
-/* nav ul {
-  list-style: none;
-  padding-left: 250px;
-  padding-top: 20px;
-  margin: 0;
-  display: flex;
-}  */
 
 /* Navigation menu styling using Flexbox (for responsive)*/
 nav ul {
@@ -69,7 +57,6 @@ nav ul li a {
   text-decoration: none;
   font-size: 25px;
   font-weight: bold;
-  font-family: Arial;
 }
 
 /* Menu icon for mobile view */
@@ -83,7 +70,6 @@ nav ul li a {
 #menu-toggle {
   display: none;
 }
-
 
 /* Main content area styling */
 main {
@@ -106,16 +92,13 @@ footer {
   text-align: center;
   padding: 10px 0;
   font-size: 20px;
-  font-family: Arial;
   border-top: 4px solid #fff;
   margin-top: auto;
 }
 
-
 /* Dashboard content styling */
 .dashboard-content {
   display: flex;
-  /*flex-wrap: wrap;*/
   width: 66%;
   justify-content: space-around;
   background-color: #fff;
@@ -136,54 +119,38 @@ footer {
   border-radius: 10px;
 }
 
+.temperature, .humidity, .pressure {
+  background: #fff; /* Default background color for widgets */
+}
 
-/* Temperature widget styling */
+/* Specific widget background colors for temperature, humidity and pressure*/
 .temperature {
   background: #00bfff;
 }
-.temperature .temp-description {
-  font-size: 30px;  
-  font-weight: bold;
-  margin: 0;
-}
-.temperature .temp-value {
-  font-size: 36px;
-  font-weight: bold;
-  margin: 0;
-}
 
-/* Humidity widget styling */
 .humidity {
   background: #ffdf00;
 }
-.humidity .humd-description {
-  font-size: 30px;  
-  font-weight: bold;
-  margin: 0;
-}
-.humidity .humd-value {
-  font-size: 36px;
-  font-weight: bold;
-  margin: 0;
-}
 
-/* Pressure widget styling */
 .pressure {
   background: #ff6347;
 }
-.pressure .pres-description {
+
+/* Widget description styling */
+.widget .temp-description, .widget .humd-description, .widget .pres-description {
   font-size: 30px;  
   font-weight: bold;
   margin: 0;
 }
-.pressure .pres-value {
+
+/* Widget value styling */
+.widget .temp-value, .widget .humd-value, .widget .pres-value {
   font-size: 36px;
   font-weight: bold;
   margin: 0;
 }
 
-
-/* Home, About and Config content styling */
+/* Home, About, and Config content styling */
 .homepage-content, .about-content, .config-content {
   justify-content: center;
   align-items: center;
@@ -194,10 +161,12 @@ footer {
   text-align: left;
 }
 
+/* Center align paragraph text in homepage content */
 .homepage-content p {
   text-align: center;
 }
 
+/* Link font styling in homepage */
 #linkfont {
   font-weight: bold;
   font-size: 20px;
@@ -209,11 +178,11 @@ h2 {
   font-weight: bold;
 }
 
-/* Button container styling */
+/* Button container and button styling */
 .button-container {
   display: flex;
   justify-content: center;
-  gap: 10px; /* Add space between buttons */
+  gap: 10px;
 }
 
 /* Button styling */
@@ -227,7 +196,7 @@ button {
   font-weight: bold;
 }
 
-/* temperature history and unit buttons styling */
+/* Button background colors for temp history and toggle unit*/
 .prev-temp-button, #toggle-temp-unit {
   background-color: #007bff;
 }
@@ -235,20 +204,34 @@ button {
   background-color: #0056b3;
 }
 
+/* Button background colors for humidity history*/
+.prev-humd-button {
+  background-color: #FFC300;
+}
+.prev-humd-button:hover {
+  background-color: #FFFF00;
+}
 
-/* Filter container styling in temp history*/
+/* Button background colors for pressure history*/
+.prev-pres-button {
+  background-color: #FF4500;
+}
+.prev-pres-button:hover {
+  background-color: #FF5237;
+}
+
+/* Filter container styling */
 .filter-container {
   padding: 10px; 
-  display: block; 
   background-color: #ddddFF;
 }
 
-/* Label and select styling within filter container */
+/* Filter container label and select styling */
 .filter-container label, .filter-container select {
   margin: 0 5px;
 }
 
-/* the toggle unit button styling */
+/* Unit toggle button styling */
 #unitToggle {
   background: linear-gradient(135deg, #3a7bd5 0%, #3a6073 100%);
   border: none;
@@ -268,33 +251,15 @@ button {
   transform: translateY(-2px); 
 }
 
-
-
-/* humidity history button styling */
-.prev-humd-button {
-  background-color: #FFC300;
-}
-.prev-humd-button:hover {
-  background-color: #FFFF00;
-}
-
-/* pressure history button styling */
-.prev-pres-button {
-  background-color: #FF4500;
-}
-.prev-pres-button:hover {
-  background-color: #FF5237;
-}
-
-
-/* Config Button Styles */
+/* Add button styling in config page*/
 #add-sensor-button, #add-data-button {
   background-color: #4CAF50;
 }
-#add-sensor-button:hover, #add-data-button:hover  {
+#add-sensor-button:hover, #add-data-button:hover {
   background-color: #45a049;
 }
 
+/* Delete button styling in config page*/
 #delete-data-button {
   background-color: #f44336;
 }
@@ -302,11 +267,11 @@ button {
   background-color: #da190b;
 }
 
-
-/* Media queries for smaller screens */
+/* Media queries for responsive design */
 @media (max-width: 1024px) {
   header h1 {
-    font-size: 24px; 
+    font-size: 24px;
+    padding-left: 100px;
   }
 
   header .logo {
@@ -321,17 +286,15 @@ button {
     background: #12253E;
     width: 100%;
     position: absolute;
-    top: 45px;
+    top: 50px;
     right: 0; /* Align the dropdown menu to the right */
     z-index: 1000; /* Ensure the dropdown menu is above other elements */
-    box-sizing: border-box; /* Include padding in width calculation */
   }
 
   nav ul li {
     width: auto; /* Adjust width to fit content */
     text-align: right;
     padding: 10px 20px;
-    box-sizing: border-box; /* Include padding in width calculation */
   }
 
   #menu-toggle:checked + .menu-icon + nav ul {
@@ -341,14 +304,28 @@ button {
   .menu-icon {
     display: block;
     font-size: 30px;
-    padding-left: 550px;
+    padding-left: 400px;
     z-index: 1001; /* Ensure the menu icon is above other elements */
+  }
+
+  .widget {
+    width: 96%;
+  }
+
+  footer {
+    font-size: 16px;
+  }
+  
+  .dashboard-content {
+    flex-direction: column;
+    width: 70%;
+    padding: 15px;
   }
 }
 
 @media (max-width: 768px) {
   header h1 {
-    font-size: 25px; 
+    font-size: 25px;
   }
 
   header .logo {
@@ -357,10 +334,9 @@ button {
   }
 
   nav ul li {
-    width: auto; /* Adjust width to fit content */
+    width: auto;
     text-align: right;
     padding: 10px 20px;
-    box-sizing: border-box; /* Include padding in width calculation */
   }
 
   #menu-toggle:checked + .menu-icon + nav ul {
@@ -371,11 +347,11 @@ button {
     display: block;
     font-size: 25px;
     padding-left: 300px;
-    z-index: 1001; /* Ensure the menu icon is above other elements */
+    z-index: 1001;
   }
 
   .widget {
-    width: 98%;
+    width: 97%;
   }
 
   footer {
@@ -384,48 +360,91 @@ button {
   
   .dashboard-content {
     flex-direction: column;
-    width: 100%;
+    width: 70%;
     padding: 10px;
+  }
+}
+
+@media (max-width: 540px) {
+  header h1 {
+    font-size: 16px;
+    padding-left: 80px;
+  }
+
+  header .logo {
+    width: 40px;
+    height: 30px;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    top: 45px; 
+  }
+
+  .menu-icon {
+    padding-left: 5px;
+    font-size: 20px;
+  }
+
+
+  .widget {
+    width: 95%;
+  }
+
+  footer {
+    font-size: 12px;
+  }
+  
+  .dashboard-content {
+    flex-direction: column;
+    width: 70%;
+    padding: 5px;
   }
 }
 
 @media (max-width: 480px) {
   header h1 {
     font-size: 18px;
-    padding-left: 80px;
+    padding-left: 60px;
   }
 
   header .logo {
-    width: 60px;
+    width: 50px;
     height: 36px;
   }
 
   nav ul {
     flex-direction: column;
-    align-items: flex-end; /* Align items to the right */
-    z-index: 1000; /* Ensure the dropdown menu is above other elements */
-    box-sizing: border-box; /* Include padding in width calculation */
-  }
-
-  nav ul li {
-    width: auto; /* Adjust width to fit content */
-    text-align: right;
-    padding: 10px 20px;
-    box-sizing: border-box; /* Include padding in width calculation */
+    align-items: flex-end;
+    z-index: 1000;
   }
 
   .menu-icon {
-    padding-left: 50px;
-    z-index: 1001; /* Ensure the menu icon is above other elements */
+    padding-left: 75px;
+    padding-top: 8px;
+    font-size: 20px;
+    z-index: 1001; 
+  }
+
+  .widget {
+    width: 95%;
+  }
+
+  footer {
+    font-size: 14px;
+  }
+  
+  .dashboard-content {
+    flex-direction: column;
+    width: 70%;
+    padding: 10px;
   }
 }
 
-
-
-
-
-/* Table styling
-table {
+/* Table styling */
+/* table {
   width: 100%;
   border-collapse: collapse;
   margin: 1rem 0;
