@@ -1,6 +1,4 @@
 import datetime
-import time
-
 from dateutil.relativedelta import relativedelta
 import sqlobject.main
 import json
@@ -115,12 +113,9 @@ def delete_sensor_readings_by_date(**kwargs):
         raise ValueError('date must be supplied')
 
     try:
-        # These two variables are to filter the records all on the same day of the specified date
-        date_filter_min = datetime.datetime.strptime(f'{kwargs.get("date")} 00:00:01', '%m-%d-%Y %H:%M:%S')
-        date_filter_max = datetime.datetime.strptime(f'{kwargs.get("date")} 23:59:59', '%m-%d-%Y %H:%M:%S')
+        date_filter = datetime.datetime.strptime(f'{kwargs.get("date")}', '%m-%d-%Y')
     except (ValueError, TypeError) as e:
-        print(e)
         raise ValueError('date format is invalid')
 
-    for x in filter(lambda x: date_filter_min <= x.date <= date_filter_max, SensorReading.select()):
+    for x in filter(lambda x: date_filter.date() == x.date.date(), SensorReading.select()):
         SensorReading.delete(x.id)
