@@ -443,6 +443,26 @@ button {
   }
 }
 
+/* Flashing background effect */
+.flashing-background {
+  animation: flash 2s infinite; /* Adjust duration for visibility */
+}
+
+@keyframes flash {
+  0% { background-color: #ffffff; } /* Start color */
+  50% { background-color: #add8e6; } /* Mid-point color */
+  100% { background-color: #ffffff; } /* End color */
+}
+
+
+
+
+
+
+
+
+
+
 /* Table styling */
 /* table {
   width: 100%;

@@ -163,7 +163,19 @@
 
 
 
+// Define a threshold temperature
+const TEMPERATURE_THRESHOLD = 35;
+const FLASH_CLASS = 'flashing-background';
 
+// Apply flashing effect based on temperature
+const checkTemperature = (temperature) => {
+    const temperatureWidget = document.querySelector('.temperature');
+    if (temperature > TEMPERATURE_THRESHOLD) {
+        temperatureWidget.classList.add(FLASH_CLASS);
+    } else {
+        temperatureWidget.classList.remove(FLASH_CLASS);
+    }
+};
 
 // Loads/Refreshes all fields on the dashboard with updated data
 const LoadData = async (sensorID) => {
@@ -176,10 +188,12 @@ const LoadData = async (sensorID) => {
         const data = await response.json();
         if (data.temperature !== undefined) {
             temperatureInCelsius = data.temperature; // Store the current temperature
-            document.getElementById('temp-value').innerText = temperatureInCelsius+ ' °C';
+            document.getElementById('temp-value').innerText = temperatureInCelsius + ' °C';
             document.getElementById('humd-value').innerText = data.humidity + ' %';
             document.getElementById('pres-value').innerText = data.pressure + ' hPa';
             
+            // Check temperature and apply flashing effect if needed
+            checkTemperature(temperatureInCelsius);
         } else {
             console.error('No data received');
         }
@@ -187,7 +201,6 @@ const LoadData = async (sensorID) => {
         console.error('Error loading data: ', error);
     }
 }
-
 
 // Store temperature in Celsius
 let temperatureInCelsius = null;
@@ -213,9 +226,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     LoadData(2);
     document.getElementById('toggle-temp-unit').addEventListener('click', toggleTemperatureUnit);
 });
-
-
-
-
-
-
