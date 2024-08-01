@@ -1,12 +1,12 @@
 var ProcessedData;//declared here to keep public
 const BASE_URL = "http://205.250.221.237:8080";
-
+console.log(window.location.href);
 //Fetches all data of a sensor from the database
 //Params: sensorID
 //Returns: array of data point objects
 const FetchData = async sensorID =>{
   try {
-    const response = await fetch(`${BASE_URL}/get_sensor_data_list?id=${sensorID}&&time_period=all`);
+    const response = await fetch(`${BASE_URL}/get_all_sensor_data_since_date?id=${sensorID}&&date=01-01-2024`);
     const data = await response.json();
     return data.sensor_data;
   }catch (error) {
