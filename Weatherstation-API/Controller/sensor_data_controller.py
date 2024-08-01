@@ -69,16 +69,14 @@ def get_latest_sensor_data(sensor_id):
     }
 
 
-def get_sensor_data_list(sensor_id, time_period: str):
+def get_all_sensor_data_since_date(sensor_id, date: str):
     """
-    Gets a list of sensor data records over a period of time.
-    For example, if time_period is set to day, all the records
-    that were inserted on the current day will be retrieved. Set
-    time_period to all to get all the sensor reading records for
-    the sensor.
+    Gets a list of sensor data records ever since a specified date.
+    For example, if the start_date specified was 07-21-2024, then all
+    the sensor data recorded since 07-21-2024 will be retrieved.
+    Date must be in the format: MM-DD-YYYY
     """
-    if time_period not in ('day', 'month', 'year', 'all'):
-        raise ValueError('time_period value must be either day, month, or year')
+    start_date = datetime.datetime.strptime(date, '%m-%d-%Y').date()
 
     # If the sensor is not found, then raise a LookupError
     try:
@@ -89,15 +87,7 @@ def get_sensor_data_list(sensor_id, time_period: str):
     sensor_data_records = list(SensorReading.select(SensorReading.q.sensorID == sensor_id,
                                                     orderBy=SensorReading.q.date))
 
-    if time_period == 'day':
-        sensor_data_records = filter(lambda x: x.date > datetime.datetime.now() - relativedelta(days=1),
-                                     sensor_data_records)
-    elif time_period == 'month':
-        sensor_data_records = filter(lambda x: x.date > datetime.datetime.now() - relativedelta(months=1),
-                                     sensor_data_records)
-    elif time_period == 'year':
-        sensor_data_records = filter(lambda x: x.date > datetime.datetime.now() - relativedelta(years=1),
-                                     sensor_data_records)
+    sensor_data_records = filter(lambda x: x.date.date() >= start_date, sensor_data_records)
 
     return list(map(lambda x: {
                             'temperature': x.temperature,

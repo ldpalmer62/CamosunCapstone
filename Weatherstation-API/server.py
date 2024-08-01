@@ -84,11 +84,11 @@ def get_latest_sensor_data_route():
         }, 403
 
 
-@app.get('/get_sensor_data_list')
-def get_sensor_data_list_route():
+@app.get('/get_all_sensor_data_since_date')
+def get_all_sensor_data_since_date_route():
     try:
         return {
-            'sensor_data': get_sensor_data_list(request.args.get('id'), request.args.get('time_period'))
+            'sensor_data': get_all_sensor_data_since_date(request.args.get('id'), request.args.get('date'))
         }, 200
     except ValueError as e:
         return {
