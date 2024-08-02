@@ -443,13 +443,24 @@ button {
   }
 }
 
-/* Flashing background effect */
-.flashing-background {
-  animation: flash 2s infinite; /* Adjust duration for visibility */
+/* Flashing background effect for hot temperatures (red)*/
+.flashing-background-hot {
+  animation: flash-hot 2s infinite; /* Adjust duration for visibility */
 }
 
-@keyframes flash {
+@keyframes flash-hot {
   0% { background-color: #ffffff; } /* Start color */
-  50% { background-color: #add8e6; } /* Mid-point color */
+  50% { background-color: #ff0000; } /* Mid-point color */
   100% { background-color: #ffffff; } /* End color */
+}
+
+/* Flashing background effect for cold temperatures (light blue)*/
+.flashing-background-cold {
+  animation: flash-cold 2s infinite;
+}
+
+@keyframes flash-cold {
+  0% { background-color: #ffffff; } 
+  50% { background-color: #4169e1; } 
+  100% { background-color: #ffffff; } 
 }

@@ -1,16 +1,20 @@
-// Define a threshold temperature
-const TEMPERATURE_THRESHOLD = 35;
-const FLASH_CLASS = 'flashing-background';
+// Define threshold temperatures
+const HOT_TEMPERATURE_THRESHOLD = 35;
+const COLD_TEMPERATURE_THRESHOLD = 10;
+const FLASH_CLASS_HOT = 'flashing-background-hot';
+const FLASH_CLASS_COLD = 'flashing-background-cold';
 
 const BASE_URL = "http://205.250.221.237:8080";
 
 // Apply flashing effect based on temperature
 const checkTemperature = (temperature) => {
     const temperatureWidget = document.querySelector('.temperature');
-    if (temperature > TEMPERATURE_THRESHOLD) {
-        temperatureWidget.classList.add(FLASH_CLASS);
-    } else {
-        temperatureWidget.classList.remove(FLASH_CLASS);
+    temperatureWidget.classList.remove(FLASH_CLASS_HOT, FLASH_CLASS_COLD); // Remove both classes first
+
+    if (temperature > HOT_TEMPERATURE_THRESHOLD) {
+        temperatureWidget.classList.add(FLASH_CLASS_HOT);
+    } else if (temperature < COLD_TEMPERATURE_THRESHOLD) {
+        temperatureWidget.classList.add(FLASH_CLASS_COLD);
     }
 };
 
