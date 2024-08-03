@@ -1,4 +1,5 @@
 var ProcessedData;//Declared here to keep public
+var monthsAndYears;
 const BASE_URL = "http://205.250.221.237:8080";
 
 // For tracking current unit(default C)
@@ -189,24 +190,130 @@ const MonthToNumber = month => {
   }
 }
 
+const NumberToMonth = month => {
+  switch (month){
+    case 1:
+      return "January";
+    case 2:
+      return "February";
+    case 3:
+      return "March";
+    case 4:
+      return "April";
+    case 5:
+      return "May";
+    case 6:
+      return "June";
+    case 7:
+      return "July";
+    case 8:
+      return "August";
+    case 9:
+      return "September";
+    case 10:
+      return "October";
+    case 11:
+      return "November";
+    case 12:
+      return "December";
+  }
+}
+
+const GetMonthsAndYears = async () => {
+  var data = ProcessedData.dataLow;
+
+  var previousMonth = (new Date(data[0].x)).getUTCMonth();
+  var previousYear = (new Date(data[0].x)).getUTCFullYear();
+
+  monthsAndYears = [{year: previousYear, months: [previousMonth+1]}]
+  var index = 0;
+
+  for(let i = 0; i < data.length; i++){
+    if((new Date(data[i].x)).getUTCFullYear() != previousYear){
+      previousYear = (new Date(data.dataLow[i].x)).getUTCFullYear();
+      previousMonth = (new Date(data[i].x)).getUTCMonth();
+      monthsAndYears.push({year: previousYear, months: [previousMonth]});
+      index++;
+    } else if((new Date(data[i].x)).getUTCMonth() != previousMonth){
+      previousMonth = (new Date(data[i].x)).getUTCMonth();
+      monthsAndYears[index].months.push(previousMonth+1);
+    }
+  }
+  AddYearsToDom(monthsAndYears);
+}
+
+const AddYearsToDom = monthsAndYears => {
+  var yearContainer = document.getElementById("yearContainer");
+  yearContainer.innerHTML = '';
+  for(let x = 0; x < monthsAndYears.length; x++){
+
+    var optYear = document.createElement('option');
+    optYear.value = monthsAndYears[x].year;
+    optYear.innerHTML = monthsAndYears[x].year;
+    yearContainer.appendChild(optYear);
+  }
+  AddMonthsToDom(monthsAndYears[0].year);
+}
+
+const AddMonthsToDom = year => {
+  var monthContainer = document.getElementById("monthContainer");
+  monthContainer.innerHTML = '';
+  var months;
+  for(let i = 0; i < monthsAndYears.length; i++){
+    if(year == monthsAndYears[i].year)
+      months = monthsAndYears[i].months;
+  }
+  for(let y = 0; y < months.length; y++){
+
+    var optMonth = document.createElement('option');
+    optMonth.value = NumberToMonth(months[y]);
+    optMonth.innerHTML = NumberToMonth(months[y]);
+    monthContainer.appendChild(optMonth);
+  }
+}
+
+const GetAndAddSensorIds = async () => {
+  var response = await fetch(`${BASE_URL}/get_all_sensors`);
+  const data = await response.json();
+  var container = document.getElementById('sensorContainer')
+  for(let i = 0; i < data.sensors.length; i++){
+    var opt = document.createElement('option');
+    opt.value = data.sensors[i].id;
+    opt.innerHTML = data.sensors[i].name;
+    container.appendChild(opt);
+  }
+}
+
+const LoadSensorData = async sensorID => {
+  var data = await FetchData(sensorID);
+  ProcessedData = ProcessData(data);
+  GetMonthsAndYears();
+}
+
 //When page loads, load a default graph
 document.addEventListener("DOMContentLoaded", async() => {
-  var data = await FetchData(2);
-  ProcessedData = ProcessData(data);
-  LoadGraph(document.getElementById("month").value, document.getElementById("year").value, ProcessedData);
+  await GetAndAddSensorIds();
+  await LoadSensorData(document.getElementById("sensorContainer").value);
+  LoadGraph(document.getElementById("monthContainer").value, document.getElementById("yearContainer").value, ProcessedData);
 });
 
 //When user selects month and year, update the graph to reflect it
-document.getElementById("month").onchange = () => {
-  LoadGraph(document.getElementById("month").value, document.getElementById("year").value, ProcessedData);
+document.getElementById("monthContainer").onchange = () => {
+  LoadGraph(document.getElementById("monthContainer").value, document.getElementById("yearContainer").value, ProcessedData);
 }
-document.getElementById("year").onchange = () => {
-  LoadGraph(document.getElementById("month").value, document.getElementById("year").value, ProcessedData);
+document.getElementById("yearContainer").onchange = () => {
+  AddMonthsToDom(document.getElementById("yearContainer").value);
+  LoadGraph(document.getElementById("monthContainer").value, document.getElementById("yearContainer").value, ProcessedData);
+}
+//When user selects sensor, update all fields and graph
+document.getElementById("sensorContainer").onchange = async () => {
+  await LoadSensorData(document.getElementById("sensorContainer").value);
+  LoadGraph(document.getElementById("monthContainer").value, document.getElementById("yearContainer").value, ProcessedData);
 }
 
 // Toggle between C and F
 const toggleUnit = () => {
   currentUnit = currentUnit === "C" ? "F" : "C";
-  LoadGraph(document.getElementById("month").value, document.getElementById("year").value, ProcessedData);
+  LoadGraph(document.getElementById("monthContainer").value, document.getElementById("yearContainer").value, ProcessedData);
 };
 document.getElementById("unitToggle").addEventListener("click", toggleUnit);
