@@ -61,8 +61,26 @@ const toggleTemperatureUnit = () => {
     }
 }
 
+const GetAndAddSensorIds = async () => {
+    var response = await fetch(`${BASE_URL}/get_all_sensors`);
+    const data = await response.json();
+    var container = document.getElementById('sensorContainer')
+    for(let i = 0; i < data.sensors.length; i++){
+        var opt = document.createElement('option');
+        opt.value = data.sensors[i].id;
+        opt.innerHTML = data.sensors[i].name;
+        container.appendChild(opt);
+    }
+}
+
 // Runs needed functions when page is loaded
 document.addEventListener("DOMContentLoaded", async () => {
-    LoadData(2);
+    await GetAndAddSensorIds();
+    document.getElementById("sensorContainer").value = 2;
+    LoadData(document.getElementById("sensorContainer").value);
     document.getElementById('toggle-temp-unit').addEventListener('click', toggleTemperatureUnit);
 });
+//When user selects sensor, update all fields and graph
+document.getElementById("sensorContainer").onchange = async () => {
+    LoadData(document.getElementById("sensorContainer").value);
+  }

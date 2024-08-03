@@ -57,6 +57,14 @@ nav ul li a {
   font-weight: bold;
 }
 
+/* Navigation label styling */
+nav ul li label {
+  color: #fff;
+  text-decoration: none;
+  font-size: 25px;
+  font-weight: bold;
+}
+
 /* Menu icon for mobile view */
 .menu-icon {
   display: none;
