@@ -10,9 +10,9 @@
 
 ### Suggested Implementation
 
-* Python web framework running on the Raspberry Pi with sqlite database or similar � suggest Flask
+* Python web framework running on the Raspberry Pi with sqlite database or similar - suggest Flask
 
-* Wi-Fi enabled microcontroller to gather sensor information and send to the Raspberry Pi � suggest programming in MicroPython or Circuit Python
+* Wi-Fi enabled microcontroller to gather sensor information and send to the Raspberry Pi - suggest programming in MicroPython or Circuit Python
 
 ### Suggested Steps
 
