@@ -77,6 +77,24 @@ nav ul li label {
   display: none;
 }
 
+
+/* Styling for the sensor dropdown container */
+main > div {
+  padding: 20px; 
+  background-color: #fff; 
+  border-radius: 10px; /* Rounded corners to match the dashboard */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect for better visibility */
+  margin-bottom: 20px; /* Space between the dropdown and dashboard content */
+}
+
+/* Ensure the sensor dropdown looks good */
+#sensorContainer, #yearContainer, #monthContainer{
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
 /* Main content area styling */
 main {
   padding: 5px;
@@ -89,6 +107,8 @@ main {
   align-items: center;
   overflow-y: auto;
   box-sizing: border-box; /* Include padding in height calculation */
+  flex-direction: column; /* Ensure that child elements stack vertically */
+
 }
 
 /* Footer styling */
@@ -242,7 +262,7 @@ button {
   background: linear-gradient(135deg, #3a7bd5 0%, #3a6073 100%);
   border: none;
   color: white;
-  padding: 10px 20px;
+  padding: 10px;
   display: inline-block;
   font-size: 16px;
   cursor: pointer;
@@ -272,6 +292,9 @@ button {
 #delete-data-button:hover {
   background-color: #da190b;
 }
+
+
+
 
 /* Media queries for responsive design */
 @media (max-width: 1024px) {
