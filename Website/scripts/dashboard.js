@@ -28,9 +28,9 @@ const LoadData = async (sensorID) => {
         const data = await response.json();
         if (data.temperature !== undefined) {
             temperatureInCelsius = data.temperature; // Store the current temperature
-            document.getElementById('temp-value').innerText = temperatureInCelsius + ' °C';
-            document.getElementById('humd-value').innerText = data.humidity + ' %';
-            document.getElementById('pres-value').innerText = data.pressure + ' hPa';
+            document.getElementById('temp-value').innerText = currentTempUnit == 'C'? temperatureInCelsius.toFixed(3) + ' °C' : ((temperatureInCelsius * 9/5) + 32).toFixed(3) + ' °F';
+            document.getElementById('humd-value').innerText = data.humidity.toFixed(3) + ' %';
+            document.getElementById('pres-value').innerText = data.pressure.toFixed(3) + ' hPa';
             
             // Check temperature and apply flashing effect if needed
             checkTemperature(temperatureInCelsius);
@@ -52,10 +52,10 @@ const toggleTemperatureUnit = () => {
     if (temperatureInCelsius !== null) {
         if (currentTempUnit === 'C') {
             const tempInFahrenheit = (temperatureInCelsius * 9/5) + 32;
-            document.getElementById('temp-value').innerText = tempInFahrenheit.toFixed(2) + ' °F';
+            document.getElementById('temp-value').innerText = tempInFahrenheit.toFixed(3) + ' °F';
             currentTempUnit = 'F';
         } else {
-            document.getElementById('temp-value').innerText = temperatureInCelsius + ' °C';
+            document.getElementById('temp-value').innerText = temperatureInCelsius.toFixed(3) + ' °C';
             currentTempUnit = 'C';
         }
     }
