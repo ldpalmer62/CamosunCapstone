@@ -73,6 +73,12 @@ const GetAndAddSensorIds = async () => {
     }
 }
 
+// Every 5 seconds fetch the data to refresh the dashboard values, this is purely for demo purposes and is not intended for general use
+setInterval(() => {
+    LoadData(document.getElementById("sensorContainer").value);
+    console.log("refreshed");
+}, 5000);
+
 // Runs needed functions when page is loaded
 document.addEventListener("DOMContentLoaded", async () => {
     await GetAndAddSensorIds();
@@ -83,4 +89,4 @@ document.addEventListener("DOMContentLoaded", async () => {
 //When user selects sensor, update all fields and graph
 document.getElementById("sensorContainer").onchange = async () => {
     LoadData(document.getElementById("sensorContainer").value);
-  }
+}

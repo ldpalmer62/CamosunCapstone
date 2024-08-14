@@ -190,6 +190,9 @@ const MonthToNumber = month => {
   }
 }
 
+//Converts a number of a month to the string of a month
+//Params: month: Int
+//Returns: String
 const NumberToMonth = month => {
   switch (month){
     case 1:
@@ -219,6 +222,8 @@ const NumberToMonth = month => {
   }
 }
 
+//From the data returned, get all the months and years that the data (ProcessedData) occupies
+//Runs AddYearsToDom when completed
 const GetMonthsAndYears = async () => {
   var data = ProcessedData.dataLow;
 
@@ -242,6 +247,8 @@ const GetMonthsAndYears = async () => {
   AddYearsToDom(monthsAndYears);
 }
 
+// Adds the years the data occupies into the dom
+// Runs AddMonthsToDom when complete
 const AddYearsToDom = monthsAndYears => {
   var yearContainer = document.getElementById("yearContainer");
   yearContainer.innerHTML = '';
@@ -255,6 +262,7 @@ const AddYearsToDom = monthsAndYears => {
   AddMonthsToDom(monthsAndYears[0].year);
 }
 
+// Adds the months the data occupies for the given year
 const AddMonthsToDom = year => {
   var monthContainer = document.getElementById("monthContainer");
   monthContainer.innerHTML = '';
@@ -272,6 +280,7 @@ const AddMonthsToDom = year => {
   }
 }
 
+// Gets all sensors hooked to the server and puts them into the dom for the user to select
 const GetAndAddSensorIds = async () => {
   var response = await fetch(`${BASE_URL}/get_all_sensors`);
   const data = await response.json();
@@ -284,6 +293,9 @@ const GetAndAddSensorIds = async () => {
   }
 }
 
+// Loads the data for a given sensor from the server
+// Runs ProcessData and places into a public variable
+// Runs GetMonthsAndYears when complete
 const LoadSensorData = async sensorID => {
   var data = await FetchData(sensorID);
   ProcessedData = ProcessData(data);
