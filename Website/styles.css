@@ -35,7 +35,7 @@ header h1 {
   padding-left: 130px;
 }
 
-/* Navigation menu styling using Flexbox (for responsive)*/
+/* Navigation menu styling using Flexbox (for responsive) */
 nav ul {
   list-style: none;
   margin: 0;
@@ -149,7 +149,7 @@ footer {
   background: #fff; /* Default background color for widgets */
 }
 
-/* Specific widget background colors for temperature, humidity and pressure*/
+/* Specific widget background colors for temperature, humidity and pressure */
 .temperature {
   background: #00bfff;
 }
@@ -222,7 +222,7 @@ button {
   font-weight: bold;
 }
 
-/* Button background colors for temp history and toggle unit*/
+/* Button background colors for temp history and toggle unit */
 .prev-temp-button, #toggle-temp-unit {
   background-color: #007bff;
 }
@@ -230,7 +230,7 @@ button {
   background-color: #0056b3;
 }
 
-/* Button background colors for humidity history*/
+/* Button background colors for humidity history */
 .prev-humd-button {
   background-color: #FFC300;
 }
@@ -238,7 +238,7 @@ button {
   background-color: #FFFF00;
 }
 
-/* Button background colors for pressure history*/
+/* Button background colors for pressure history */
 .prev-pres-button {
   background-color: #FF4500;
 }
@@ -277,7 +277,7 @@ button {
   transform: translateY(-2px); 
 }
 
-/* Add button styling in config page*/
+/* Add button styling in config page */
 #add-sensor-button, #add-data-button {
   background-color: #4CAF50;
 }
@@ -285,7 +285,7 @@ button {
   background-color: #45a049;
 }
 
-/* Delete button styling in config page*/
+/* Delete button styling in config page */
 #delete-data-button {
   background-color: #f44336;
 }
@@ -293,6 +293,22 @@ button {
   background-color: #da190b;
 }
 
+/* Hides elements used to hide the warning message container when no warning is needed */
+.hidden {
+  display: none;
+}
+
+/* Styles for the warning message displayed when the temperature is too high or too low */
+.warning-message {
+  background-color: #ffcc00;
+  color: #000;
+  padding: 15px;
+  margin: 10px 0;
+  border: 1px solid #cc0000;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+}
 
 
 

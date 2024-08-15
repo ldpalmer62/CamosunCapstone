@@ -1,20 +1,38 @@
 // Define threshold temperatures
-const HOT_TEMPERATURE_THRESHOLD = 35;
+const HOT_TEMPERATURE_THRESHOLD = 20;
 const COLD_TEMPERATURE_THRESHOLD = 10;
 const FLASH_CLASS_HOT = 'flashing-background-hot';
 const FLASH_CLASS_COLD = 'flashing-background-cold';
 
 const BASE_URL = "http://205.250.221.237:8080";
 
+// Show warning message in the UI
+const showWarningMessage = (message) => {
+    const warningMessageElement = document.getElementById('warning-message');
+    warningMessageElement.innerText = message;
+    warningMessageElement.classList.remove('hidden');
+};
+
+// Hide warning message
+const hideWarningMessage = () => {
+    const warningMessageElement = document.getElementById('warning-message');
+    warningMessageElement.classList.add('hidden');
+};
+
+
 // Apply flashing effect based on temperature
 const checkTemperature = (temperature) => {
     const temperatureWidget = document.querySelector('.temperature');
     temperatureWidget.classList.remove(FLASH_CLASS_HOT, FLASH_CLASS_COLD); // Remove both classes first
 
+    hideWarningMessage(); // Hide any previous warnings
+    
     if (temperature > HOT_TEMPERATURE_THRESHOLD) {
         temperatureWidget.classList.add(FLASH_CLASS_HOT);
+        showWarningMessage("Warning: The temperature is extremely high. Stay cool and hydrated!");
     } else if (temperature < COLD_TEMPERATURE_THRESHOLD) {
         temperatureWidget.classList.add(FLASH_CLASS_COLD);
+        showWarningMessage("Warning: The temperature is dangerously cold. Stay warm and safe!");
     }
 };
 
